@@ -5,7 +5,7 @@ import com.se1722.englishassistant.entity.CompositionBankEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface CompoitionBankDao {
+public interface CompositionBankDao {
 
     public int deleteByPrimaryKey(Integer cpt_id);
 
