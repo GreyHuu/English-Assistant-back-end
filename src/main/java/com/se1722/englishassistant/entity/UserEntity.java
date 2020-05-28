@@ -8,6 +8,7 @@ package com.se1722.englishassistant.entity;
  */
 
 import java.util.Date;
+
 public class UserEntity {
     private Integer id;
     //创建时间
@@ -33,9 +34,6 @@ public class UserEntity {
         this.id = id;
     }
 
-    public Date getCreate_time() {
-        return create_time;
-    }
 
     public void setCreate_time(Date create_time) {
         this.create_time = create_time;
@@ -89,4 +87,7 @@ public class UserEntity {
         this.email = email;
     }
 
+    public Date getCreate_time() {
+        return create_time;
+    }
 }

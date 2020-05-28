@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity findUserByPhone(String phone) {
+        return userDao.findUserByPhone(phone);
+    }
+
+    @Override
     public int addUser(UserEntity userEntity) {
         return userDao.addUser(userEntity);
     }

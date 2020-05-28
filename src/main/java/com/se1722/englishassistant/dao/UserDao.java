@@ -4,6 +4,7 @@ import com.se1722.englishassistant.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+
 // Mapper可以使mybatis-spring-boot-starter自动映射
 @Mapper
 public interface UserDao {
@@ -15,6 +16,7 @@ public interface UserDao {
      */
     @Select("SELECT * FROM user WHERE id = #{id}")
     UserEntity findUserById(@Param("id") int id);                                              //    @Param中定义的id对应了SQL中的#{id}
+
     /**
      * 获得全部用户
      *
@@ -22,6 +24,7 @@ public interface UserDao {
      */
     @Select("SELECT * FROM user")
     List<UserEntity> findAllUser();
+
     /**
      * 传入User对象 增加user
      *
@@ -29,7 +32,7 @@ public interface UserDao {
      * @return
      */
     @Insert("INSERT INTO user(create_time,password,nick_name,true_name,age,mobile,email) " +
-            "VALUES(#{createTime},#{password},#{nickName},#{trueName},#{age},#{mobile},#{email})")
+            "VALUES(#{create_time},#{password},#{nick_name},#{true_name},#{age},#{mobile},#{email})")
     int addUser(UserEntity userEntity);
 
     /**
@@ -48,4 +51,12 @@ public interface UserDao {
      */
     @Delete("DELETE FROM user WHERE id =#{id}")
     int delete(Long id);
+
+    /**
+     * 通过手机号查找到用户
+     * @param phone
+     * @return
+     */
+    @Select("SELECT * FROM user WHERE mobile = #{phone}")
+    UserEntity findUserByPhone(String phone);
 }
