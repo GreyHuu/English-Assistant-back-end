@@ -109,18 +109,23 @@ public class UserController {
         UserEntity userEntity = userService.findUserByPhone(param.get("phone"));
         CurrentUser currentUser =
                 new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
-        SessionContent.removeAllSession();
-        HttpSession session = SessionContent.getNewSession();
-        session.setAttribute(CURRENT_USER_SESSION, currentUser);
+        if (currentUser != null) {
+            SessionContent.removeAllSession();
+            HttpSession session = SessionContent.getNewSession();
+            session.setAttribute(CURRENT_USER_SESSION, currentUser);
 //                生成token
-        String token = TokenUtil.getToken(currentUser);
+            String token = TokenUtil.getToken(currentUser);
 //                放入返回的map中
-        HashMap<String, String> result = new HashMap<>();
-        result.put("userName", currentUser.getNick_name());
-        result.put("token", token);
-        result.put("session", session.getId());
-        SessionContent.updateSession(session.getId(), session);
-        return RestResponse.succuess("登录成功", result);
+            HashMap<String, String> result = new HashMap<>();
+            result.put("userName", currentUser.getNick_name());
+            result.put("token", token);
+            result.put("session", session.getId());
+            SessionContent.updateSession(session.getId(), session);
+            return RestResponse.succuess("登录成功", result);
+        } else {
+            return RestResponse.fail("当前手机号未注册，请先注册");
+        }
+
     }
 
     /**
