@@ -1,13 +1,16 @@
 package com.se1722.englishassistant.interceptor;
 
 import com.se1722.englishassistant.entity.CurrentUser;
+import com.se1722.englishassistant.utils.SessionContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,11 +31,14 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 //        注册接口
         NOT_INTERCEPT_URI.add("/users/register");
 //        获得手机验证码的接口
-        NOT_INTERCEPT_URI.add("/users/get-phone-code");
+        NOT_INTERCEPT_URI.add("/phone/get-phone-code");
 //        验证验证码的接口
-        NOT_INTERCEPT_URI.add("/users/compare-code");
+        NOT_INTERCEPT_URI.add("/phone/compare-code");
 //        错误管理
         NOT_INTERCEPT_URI.add("/error");
+//        通过手机验证码登录
+        NOT_INTERCEPT_URI.add("/users/login-by-phone");
+
     }
 
     /**
@@ -48,11 +54,13 @@ public class AuthorityInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
+        log.info(Arrays.toString(request.getCookies()));
         if (NOT_INTERCEPT_URI.contains(uri)) {
             log.info("对于" + uri + "不拦截");
             return true;
         }
         String token = request.getHeader("Access-Token");// 从 http 请求头中取出 token
+        String sessionId = request.getHeader("Session_Id");// 从 http 请求头中取出 token
 //        执行token认证
         if (token == null) {
             response.setStatus(401);
@@ -60,14 +68,16 @@ public class AuthorityInterceptor implements HandlerInterceptor {
             return false;
         }
 //        执行session认证
-//        log.info("对于" + uri + "进行拦截");
-//        HttpSession session = request.getSession();
-//        CurrentUser userInfo = (CurrentUser) session.getAttribute(CURRENT_USER_SESSION);
-//        if (userInfo == null) {
-//            response.setStatus(401);
-//            log.info("当前未登录，已经对" + uri + "进行拦截");
-//            return false;
-//        }
+        log.info("对于" + uri + "进行session拦截");
+//        获取session
+        HttpSession session = SessionContent.getSession(sessionId);
+        CurrentUser userInfo = (CurrentUser) session.getAttribute(CURRENT_USER_SESSION);
+        if (userInfo == null) {
+            response.setStatus(401);
+            log.info("当前未登录，已经对" + uri + "进行session拦截");
+            SessionContent.removeAllSession();
+            return false;
+        }
         return true;
     }
 
