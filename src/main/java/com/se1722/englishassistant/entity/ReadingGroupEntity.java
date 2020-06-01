@@ -4,7 +4,7 @@ package com.se1722.englishassistant.entity;
  * @ClassName ReadingGroupEntity
  * @Description 
  * @author 15197
- * @date 2020-05-26 14:27:24
+ * @date 2020-06-01 19:35:34
  * @version 1.0 
  */
 public class ReadingGroupEntity {
@@ -14,6 +14,7 @@ public class ReadingGroupEntity {
     private String title;
     //满分
     private Double full_mark;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -32,6 +33,12 @@ public class ReadingGroupEntity {
     }
     public void setFull_mark(Double full_mark) {
         this.full_mark = full_mark;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

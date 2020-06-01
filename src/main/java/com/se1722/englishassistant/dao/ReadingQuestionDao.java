@@ -1,9 +1,7 @@
 package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.ReadingQuestionEntity;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface ReadingQuestionDao {
 
     public int deleteByPrimaryKey(Integer id);
