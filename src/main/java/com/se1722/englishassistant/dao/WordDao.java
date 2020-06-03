@@ -3,7 +3,6 @@ package com.se1722.englishassistant.dao;
 import com.se1722.englishassistant.entity.WordEntity;
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface WordDao {
 
     public int deleteByPrimaryKey(Integer id);

@@ -17,6 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/phone")
 public class PhoneCodeController {
-    @Autowired
+    @Resource
     private RestTemplate restTemplate;
     // 验证码存储key
     private static final String CURRENT_CODE = "current_code";

@@ -7,6 +7,7 @@ package com.se1722.englishassistant.entity;
  * @date 2020-05-26 14:27:24
  * @version 1.0 
  */
+
 public class CompositionBankEntity {
 
     //作文ID

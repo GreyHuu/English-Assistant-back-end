@@ -6,15 +6,15 @@ import com.se1722.englishassistant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
-    /**
-     *  mybatis-spring-boot-starter自动扫描有mapper 注解的接口实现装配
-     *  所以忽视以下错误
-     */
-    @Autowired
+
+    @Resource
     private UserDao userDao;
+
     @Override
     public List<UserEntity> findAllUser() {
         return userDao.findAllUser();

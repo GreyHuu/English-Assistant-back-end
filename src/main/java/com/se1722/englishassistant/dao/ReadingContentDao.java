@@ -1,15 +1,32 @@
 package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.ReadingContentEntity;
+import com.se1722.englishassistant.service.PublicDBInterface;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
-public interface ReadingContentDao {
+import java.util.List;
 
-    public int deleteByPrimaryKey(Integer id);
+@Mapper
+@Component
+public interface ReadingContentDao extends PublicDBInterface<ReadingContentEntity> {
 
-    public int insertSelective(ReadingContentEntity record);
+    @Select("SELECT * FROM reading_content WHERE group_id = #{id}")
+    List<ReadingContentEntity> selectAllByGroupId(Integer id);
 
-    public ReadingContentEntity selectByPrimaryKey(Integer id);
+    @Override
+    int deleteByPrimaryKey(Object o);
 
-    public int updateByPrimaryKeySelective(ReadingContentEntity record);
+    @Override
+    int insert(ReadingContentEntity readingContentEntity);
 
+    @Override
+    List<ReadingContentEntity> selectAll();
+
+    @Override
+    ReadingContentEntity selectByPrimaryKey(Object o);
+
+    @Override
+    int updateByPrimaryKey(ReadingContentEntity readingContentEntity);
 }

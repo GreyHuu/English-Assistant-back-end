@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,7 @@ public class UserController {
     // 登录的用户存储如session时的key
     public static final String CURRENT_USER_SESSION = "current_session";
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     /**

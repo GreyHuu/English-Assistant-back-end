@@ -2,12 +2,17 @@ package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * 用于User相关的数据库操作
+ */
 // Mapper可以使mybatis-spring-boot-starter自动映射
 @Mapper
-public interface UserDao {
+@Component
+public interface UserDao  {
     /**
      * 通过id查询用户
      *
