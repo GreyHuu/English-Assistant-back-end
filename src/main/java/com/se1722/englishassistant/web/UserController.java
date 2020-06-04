@@ -18,9 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-/**
- * 用于处理用户相关的controller
- */
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -47,7 +44,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public RestResponse userLogin(@RequestBody Map<String, Object> param) {   // 使用RequestBody和map来接收json数据
+    public RestResponse userLogin(@RequestBody Map<String, Object> param, HttpSession session) {   // 使用RequestBody和map来接收json数据
         log.info("用户手机号为 " + param.get("phone") + " 的用户正在登录");
         UserEntity userEntity = userService.findUserByPhone(param.get("phone").toString());
         if (userEntity != null) {
@@ -56,12 +53,13 @@ public class UserController {
 //                当前登录的用户
                 CurrentUser currentUser =
                         new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
-                HttpSession session = getRequest().getSession();
+//                HttpSession session = getRequest().getSession();
+//                System.out.println(currentUser.getNick_name());
                 session.setAttribute(CURRENT_USER_SESSION, currentUser);
 //                生成token
                 String token = TokenUtil.getToken(currentUser);
 //                放入返回的map中
-                HashMap<String, String> result = new HashMap<>();
+                HashMap<String, String> result = new HashMap<String, String>();
                 result.put("userName", currentUser.getNick_name());
                 result.put("token", token);
                 return RestResponse.succuess("登录成功", result);
