@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReadingService {
     List<ReadingGroupEntity> getAllReadingGroup();
-
+    Double selectFullMarkById(Integer id);
     int deleteByPrimaryKey(Integer id);
 
     int insertSelective(ReadingGroupEntity record);

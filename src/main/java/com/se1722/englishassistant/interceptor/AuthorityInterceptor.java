@@ -38,7 +38,8 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         NOT_INTERCEPT_URI.add("/error");
 //        通过手机验证码登录
         NOT_INTERCEPT_URI.add("/users/login-by-phone");
-
+//        注销登录
+        NOT_INTERCEPT_URI.add("/users/logout");
     }
 
     /**

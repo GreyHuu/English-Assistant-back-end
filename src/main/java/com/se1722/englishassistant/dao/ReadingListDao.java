@@ -1,7 +1,5 @@
 package com.se1722.englishassistant.dao;
 
-import com.se1722.englishassistant.entity.ReadingListEntity;
-import com.se1722.englishassistant.service.PublicDBInterface;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -10,7 +8,7 @@ import java.util.Date;
 
 @Mapper
 @Component
-public interface ReadingListDao extends PublicDBInterface<ReadingListEntity> {
+public interface ReadingListDao {
     /**
      * 获得某个题目组的练习次数
      *

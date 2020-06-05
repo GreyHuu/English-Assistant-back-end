@@ -2,7 +2,6 @@ package com.se1722.englishassistant.utils;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -76,7 +75,6 @@ public class SessionContent {
     public static boolean hasSession(String sessionId) {
         return sessionMap.containsKey(sessionId);
     }
-
     /**
      * 获取session
      *

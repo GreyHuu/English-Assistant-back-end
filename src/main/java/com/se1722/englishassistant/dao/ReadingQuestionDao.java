@@ -1,27 +1,29 @@
 package com.se1722.englishassistant.dao;
 
+import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 import com.se1722.englishassistant.entity.ReadingQuestionEntity;
-import com.se1722.englishassistant.service.PublicDBInterface;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Mapper
 @Component
-public interface ReadingQuestionDao extends PublicDBInterface<ReadingQuestionEntity> {
-    @Override
+public interface ReadingQuestionDao {
+
+    @Select("SELECT * FROM reading_question WHERE id = #{id}")
+    ReadingQuestionEntity selectByPrimaryKey(Integer id);
+
+    @Select("SELECT answer FROM reading_question WHERE id = #{id}")
+    String selectAnswerById(Integer id);
+
     int deleteByPrimaryKey(Object o);
 
-    @Override
     List<ReadingQuestionEntity> selectAll();
 
-    @Override
-    ReadingQuestionEntity selectByPrimaryKey(Object o);
-
-    @Override
     int updateByPrimaryKey(ReadingQuestionEntity readingQuestionEntity);
 
-    @Override
     int insertUseGeneratedKeys(ReadingQuestionEntity readingQuestionEntity);
 }

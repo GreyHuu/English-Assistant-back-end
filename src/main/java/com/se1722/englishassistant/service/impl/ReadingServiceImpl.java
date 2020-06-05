@@ -20,6 +20,17 @@ public class ReadingServiceImpl implements ReadingService {
         return readingGroupDao.getAllReadingGroup();
     }
 
+    /**
+     * 获得题目组的满分
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Double selectFullMarkById(Integer id) {
+        return readingGroupDao.selectFullMarkById(id);
+    }
+
 
     @Override
     public int deleteByPrimaryKey(Integer id) {

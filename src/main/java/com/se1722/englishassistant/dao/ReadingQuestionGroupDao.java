@@ -1,7 +1,5 @@
 package com.se1722.englishassistant.dao;
 
-import com.se1722.englishassistant.entity.ReadingQuestionGroupEntity;
-import com.se1722.englishassistant.service.PublicDBInterface;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -9,7 +7,16 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
-public interface ReadingQuestionGroupDao extends PublicDBInterface<ReadingQuestionGroupEntity> {
+public interface ReadingQuestionGroupDao {
     @Select("SELECT question_ids FROM reading_question_group WHERE reading_id = #{id}")
     String getQuestionsIdByReadingId(Integer id);
+
+    @Select("SELECT reading_id  FROM reading_question_group WHERE question_ids like concat('%',',',#{id},',','%')")
+    Integer getGroupIdByQuestionId(Integer id);
+
+    @Select("SELECT reading_id  FROM reading_question_group WHERE question_ids like concat(#{id},',','%')")
+    Integer getGroupIdByQuestionId2(Integer id);
+
+    @Select("SELECT reading_id  FROM reading_question_group WHERE question_ids like concat('%',',',#{id})")
+    Integer getGroupIdByQuestionId3(Integer id);
 }

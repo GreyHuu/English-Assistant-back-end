@@ -21,4 +21,35 @@ public class ReadingQuestionGroupServiceImpl implements ReadingQuestionGroupServ
     public String getQuestionsIdByReadingId(Integer id) {
         return readingQuestionGroupDao.getQuestionsIdByReadingId(id);
     }
+
+    /**
+     * 通过问题找到所属的题目组   进而获得总分
+     *id左右两边都有逗号
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGroupIdByQuestionId(Integer id) {
+        return readingQuestionGroupDao.getGroupIdByQuestionId(id);
+    }
+
+    /**
+     * id前面没逗号
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGroupIdByQuestionId2(Integer id) {
+        return readingQuestionGroupDao.getGroupIdByQuestionId2(id);
+    }
+
+    /**
+     * id后面没逗号
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getGroupIdByQuestionId3(Integer id) {
+        return readingQuestionGroupDao.getGroupIdByQuestionId3(id);
+    }
 }

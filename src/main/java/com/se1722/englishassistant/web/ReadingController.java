@@ -6,6 +6,7 @@ import com.se1722.englishassistant.entity.ReadingQuestionEntity;
 import com.se1722.englishassistant.entity.RestReadingGroupEntity;
 import com.se1722.englishassistant.service.*;
 import com.se1722.englishassistant.utils.RestResponse;
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
@@ -105,22 +106,24 @@ public class ReadingController {
 
     /**
      * 通过group id获得文章
+     *
      * @param params
      * @return
      */
     @PostMapping("/get-contents")
-    public RestResponse getContentByGroupId(@RequestBody Map<String, Object> params) {
+    public RestResponse getContentByGroupId(@NotNull @RequestBody Map<String, Object> params) {
         List<ReadingContentEntity> readingContentEntities = readingContentService.selectAllByGroupId(Integer.valueOf(params.get("id").toString()));
         return RestResponse.succuess(readingContentEntities);
     }
 
     /**
      * 获得相应文章的问题
+     *
      * @param params
      * @return
      */
     @PostMapping("/get-questions")
-    public RestResponse getQuestionsByReadingId(@RequestBody Map<String, Object> params) {
+    public RestResponse getQuestionsByReadingId(@NotNull @RequestBody Map<String, Object> params) {
         String questionIds = readingQuestionGroupService.getQuestionsIdByReadingId(Integer.valueOf(params.get("id").toString()));
         List<String> ids = Arrays.asList(questionIds.split(","));
         List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<>();
@@ -129,5 +132,40 @@ public class ReadingController {
             readingQuestionEntities.add(readingQuestionEntity);
         }
         return RestResponse.succuess(readingQuestionEntities);
+    }
+
+    /**
+     * 比较答案
+     *
+     * @param params
+     * @return
+     */
+    @PostMapping("/compare-answers")
+    public RestResponse compareGroupAnswer(@NotNull @RequestBody Map<String, Object> params) {
+        List<Map<String, Object>> groupsAnswer = (List<Map<String, Object>>) params.get("answers");
+        int idExample=Integer.valueOf(groupsAnswer.get(0).get("id").toString());
+//        获得题目id
+        Integer readingId = readingQuestionGroupService.getGroupIdByQuestionId(idExample);
+        if (readingId==null)
+            readingId = readingQuestionGroupService.getGroupIdByQuestionId2(idExample);
+        if(readingId==null)
+            readingId = readingQuestionGroupService.getGroupIdByQuestionId3(idExample);
+//        获得题目id
+        Integer groupId=readingContentService.selectGroupIdByReadingID(readingId);
+        //        获得总分
+        Double fullMark = readingService.selectFullMarkById(groupId);
+//        算出每道题的分数
+        Double eachMark = fullMark / groupsAnswer.size();
+//        当前阅读的得分
+        Double mark = 0.0;
+//        循环比较答案
+        for (Map<String, Object> answer : groupsAnswer) {
+            Integer id = Integer.valueOf(answer.get("id").toString());
+            String an = answer.get("answer").toString();
+            Boolean isRight = readingQuestionService.compareQuestion(an, id);
+            if (isRight)
+                mark += eachMark;
+        }
+        return RestResponse.succuess(mark);
     }
 }

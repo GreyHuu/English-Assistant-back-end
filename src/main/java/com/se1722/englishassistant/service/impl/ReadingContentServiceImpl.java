@@ -31,4 +31,14 @@ public class ReadingContentServiceImpl implements ReadingContentService {
     public List<ReadingContentEntity> selectAllByGroupId(Integer id) {
         return readingContentDao.selectAllByGroupId(id);
     }
+
+    /**
+     * 通过文章id获得组别id
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer selectGroupIdByReadingID(Integer id) {
+        return readingContentDao.selectGroupIdByReadingID(id);
+    }
 }
