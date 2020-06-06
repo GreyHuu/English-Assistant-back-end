@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service(value = "wordService")
+@Service
 public class WordServiceImpl implements WordService {
 
     @Autowired
@@ -24,5 +24,9 @@ public class WordServiceImpl implements WordService {
 
     public Integer deleteWord(Integer word_id, Integer user_id) {
         return wordDao.delete(word_id, user_id);
+    }
+
+    public List<WordEntity> queryNewWord(Integer user_id) {
+        return wordDao.findAllByUserId(user_id);
     }
 }
