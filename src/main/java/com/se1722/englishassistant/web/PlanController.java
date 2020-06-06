@@ -5,14 +5,17 @@ import com.se1722.englishassistant.entity.WordEntity;
 import com.se1722.englishassistant.entity.WordUserPlansEntity;
 import com.se1722.englishassistant.service.PlanService;
 import com.se1722.englishassistant.utils.RestResponse;
+import com.se1722.englishassistant.utils.SessionContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /***********************************************
@@ -28,30 +31,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/plan")
 public class PlanController {
-    @Autowired
+
+    @Resource
     private PlanService planService;
 
-    @Autowired
-    private UserController userController;
+    private static Integer user_id;
 
-    /**
-     * 设置初始计划
-     * desc 初始化计划
-     * @return
-     */
-    @PostMapping("/savePlanDefault")
-    public RestResponse savePlanDefault(HttpSession session){
-        CurrentUser currentUser = null;
-        System.out.println(userController.getCurrentUser().getData());
-        if( currentUser == null ){
-            return RestResponse.fail("用户未登录，初始失败！");
-        }
-        log.info(currentUser.getNick_name() + "开始插入初始计划");
-        Integer count = planService.savePlanDefault(currentUser.getId());
-        if (count == 1){
-            return RestResponse.succuess("插入初始计划成功");
-        }
-       return RestResponse.fail("初始化计划失败");
+    // 登录的用户存储如session时的key
+    public static final String CURRENT_USER_SESSION = "current_session";
+
+    //拿到用户的id
+    private Integer getUser(HttpServletRequest request){
+        String sessionId = request.getHeader("Session_Id");// 从 http 请求头中取出 token
+        //        获取session
+        HttpSession session = SessionContent.getSession(sessionId);
+        CurrentUser userInfo = (CurrentUser) session.getAttribute(CURRENT_USER_SESSION);
+        log.info("拿到"+userInfo.getNick_name()+"用户信息");
+        return userInfo.getId();
     }
 
     /**
@@ -62,8 +58,8 @@ public class PlanController {
      * @return
      */
     @PostMapping("/savePlanDailyNumber/{number}/{type}")
-    public RestResponse savePlanDailyNumber(@PathVariable Integer number ,@PathVariable Integer type){
-        Integer user_id = 13;
+    public RestResponse savePlanDailyNumber(HttpServletRequest request, @PathVariable Integer number ,@PathVariable Integer type){
+        user_id = getUser(request);
         Integer count = planService.savePlanDailyNumber(number, user_id, type);
         if(count != 0){
             return RestResponse.succuess("设置计划成功");
@@ -76,8 +72,8 @@ public class PlanController {
      * @return
      */
     @GetMapping("/queryDailyWord")
-    public RestResponse queryDailyWord(){
-        Integer user_id = 13;
+    public RestResponse queryDailyWord(HttpServletRequest request){
+        user_id = getUser(request);
         List<WordEntity> wordEntityList = (List<WordEntity>) planService.queryDailyWord(user_id);
         if(wordEntityList.isEmpty()){
            return RestResponse.fail("查询每日词汇失败");
@@ -90,11 +86,34 @@ public class PlanController {
      * 更新一则背诵信息
      * state为0时，表示没读过的单词。state为1时表示已打卡的单词
      */
-//    @PutMapping("/updateDailyWordInPlan")
-//    public RestResponse updateDailyWordInPlan(){
-//        Integer user_id = 13;
-//        Integer count = planService.updateDailyWordInPlan(user_id, state);
-//    }
+    @PutMapping("/updateDailyWordInPlan/{number}/{type}")
+    public RestResponse updateDailyWordInPlan(HttpServletRequest request, @PathVariable Integer number ,@PathVariable Integer type){
+        user_id = getUser(request);
+        log.info(user_id+"正在更新一则背诵信息");
+        log.info("删除旧的计划");
+        Integer countDel = planService.deleteDailyWordInPlan(user_id);
+        System.out.println(countDel);
+        log.info("加入新的计划");
+        Integer count = planService.savePlanDailyNumber(number, user_id, type);
+
+        if(count>0){
+            return RestResponse.succuess("修改计划成功");
+        }
+        return RestResponse.fail("修改计划失败");
+    }
+
+    /**
+     * 获得学习数据 学习进度 每日单词 剩余天数
+     * @return
+     */
+    @GetMapping("/getStatiticsById")
+    public RestResponse getStatiticsById(HttpServletRequest request){
+        user_id = getUser(request);
+        List<Object> list = new ArrayList
+                <Object>();
+        list = planService.getStatiticsById(user_id);
+        return RestResponse.succuess("取得学习数据", list);
+    }
 
     /**
      * 更新计划
@@ -102,19 +121,27 @@ public class PlanController {
      * @return
      */
     @PutMapping("/updatePlan")
-    public RestResponse updatePlan(@RequestBody WordUserPlansEntity plan){
+    public RestResponse updatePlan(@RequestBody WordUserPlansEntity plan, HttpServletRequest request){
+        user_id = getUser(request);
         log.info(plan.getUser_id()+"正在更新背诵计划");
         return RestResponse.succuess("更新成功",planService.updatePlan(plan));
     }
 
     /**
      * 通过id查询用户的计划
-     * @param user_id 用户id
      * @return
      */
-    @GetMapping("/queryPlanByUserId/{user_id}")
-    public RestResponse queryPlanByUserId(@PathVariable Integer user_id){
+    @GetMapping("/queryPlanByUserId")
+    public RestResponse queryPlanByUserId(HttpServletRequest request){
+        user_id = getUser(request);
         return RestResponse.succuess(" 查询成功",planService.queryPlanByUserId(user_id));
+    }
+
+    // 完成了当天的背诵任务
+    @PutMapping("/updateDailyWordState")
+    public RestResponse updateDailyWordState(HttpServletRequest request){
+        user_id = getUser(request);
+        return RestResponse.succuess(" 今日打卡完成",planService.updateDailyWordState(user_id));
     }
 
     /**

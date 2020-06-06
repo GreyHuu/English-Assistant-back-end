@@ -17,6 +17,18 @@ public class UserDaliyWordEntity {
     private Integer type;
     private Integer number;
 
+    @Override
+    public String toString() {
+        return "UserDaliyWordEntity{" +
+                "id=" + id +
+                ", word_id_start=" + word_id_start +
+                ", user_id=" + user_id +
+                ", state=" + state +
+                ", type=" + type +
+                ", number=" + number +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

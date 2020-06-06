@@ -16,4 +16,12 @@ public interface PlanService {
     Integer savePlanDailyNumber( Integer number, Integer user_id, Integer type);
 
     List<WordEntity> queryDailyWord(Integer user_id);
+
+    Integer updateDailyWordInPlan(Integer number, Integer user_id, Integer type);
+
+    List<Object> getStatiticsById(Integer user_id);
+
+    Integer updateDailyWordState(Integer user_id);
+
+    Integer deleteDailyWordInPlan(Integer user_id);
 }
