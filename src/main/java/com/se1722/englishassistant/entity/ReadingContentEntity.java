@@ -4,7 +4,7 @@ package com.se1722.englishassistant.entity;
  * @ClassName ReadingContentEntity
  * @Description 
  * @author 15197
- * @date 2020-05-26 14:27:24
+ * @date 2020-06-01 19:35:34
  * @version 1.0 
  */
 public class ReadingContentEntity {

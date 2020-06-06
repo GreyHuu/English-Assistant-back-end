@@ -6,7 +6,7 @@ import java.util.Date;
  * @ClassName ReadingListEntity
  * @Description 
  * @author 15197
- * @date 2020-05-26 14:27:24
+ * @date 2020-06-01 19:35:34
  * @version 1.0 
  */
 public class ReadingListEntity {
@@ -20,6 +20,8 @@ public class ReadingListEntity {
     private Double score;
     //提交时间
     private Date time;
+    //持续时间
+    private String during_time;
 
     public Integer getId() {
         return id;
@@ -50,6 +52,12 @@ public class ReadingListEntity {
     }
     public void setTime(Date time) {
         this.time = time;
+    }
+    public String getDuring_time() {
+        return during_time;
+    }
+    public void setDuring_time(String during_time) {
+        this.during_time = during_time;
     }
 
 }

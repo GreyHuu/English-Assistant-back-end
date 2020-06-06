@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Mapper
 public interface WordDao {
 
     @Select("select * from word where collect=#{type}")
