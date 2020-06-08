@@ -1,11 +1,9 @@
 package com.se1722.englishassistant.dao;
 
-
 import com.se1722.englishassistant.entity.CompositionBankEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
 import java.util.List;
 
 @Mapper
@@ -42,5 +40,14 @@ public interface CompositionBankDao {
      */
     @Update("UPDATE user SET cpt_reference=#{cpt_reference} WHERE cpt_id=#{cpt_id}")
     public int countReference(int cpt_id, int cpt_reference);
+
+    public int deleteByPrimaryKey(Integer cpt_id);
+
+    public int insertSelective(CompositionBankEntity record);
+
+    public CompositionBankEntity selectByPrimaryKey(Integer cpt_id);
+
+    public int updateByPrimaryKeySelective(CompositionBankEntity record);
+
 
 }
