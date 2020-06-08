@@ -1,10 +1,7 @@
 package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.CompositionEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ import java.util.List;
  * 作者：姚尊金
  * 日期：2020/5/29 9:26
  */
+@Mapper
 public interface CompositionDao {
 
     /**
@@ -35,8 +33,8 @@ public interface CompositionDao {
      * @param mycpt
      * @return
      */
-    @Insert("INSERT INTO composition(cpt_id, user_id, cpt_title, mycpt, mycpt) " +
-            "values(#{mycpt.cpt_id}, #{mycpt.user_id}, #{mycpt.cpt_title}, #{mycpt}, #{mycpt})")
+    @Insert("INSERT INTO composition(cpt_id, user_id, mycpt, mycpt_create_time, mycpt_word_count) " +
+            "values(#{mycpt.cpt_id}, #{mycpt.user_id}, #{mycpt}, #{mycpt_create_time}, #{mycpt_word_count})")
     public int addAComposition(CompositionEntity mycpt);
 
     /**

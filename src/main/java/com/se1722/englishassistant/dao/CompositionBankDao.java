@@ -38,9 +38,9 @@ public interface CompositionBankDao {
     /**
      *@description 增加作文引用数
      * @param cpt_id
-     * @return CompositionBankEntity
+     * @return 1/0
      */
-    @Update("UPDATE user SET times=#{times} WHERE cpt_id=#{cpt_id}")
-    public int countReference(int cpt_id, int times);
+    @Update("UPDATE user SET cpt_reference=#{cpt_reference} WHERE cpt_id=#{cpt_id}")
+    public int countReference(int cpt_id, int cpt_reference);
 
 }
