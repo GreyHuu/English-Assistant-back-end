@@ -68,7 +68,6 @@ public interface ReadingListDao {
 
     /**
      * 获得ReadingListEntity
-     *
      * @param id
      * @return
      */
