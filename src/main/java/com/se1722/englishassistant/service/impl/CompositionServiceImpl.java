@@ -26,7 +26,6 @@ public class CompositionServiceImpl implements CompositionService {
      * 添加一篇我的作文
      * @return
      */
-
     public int addACompositionAndCount(CompositionEntity mycpt, int cpt_reference) {
         //添加作文
         compositionDao.addAComposition(mycpt);

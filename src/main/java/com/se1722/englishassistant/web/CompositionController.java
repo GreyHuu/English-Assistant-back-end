@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /*
  * 作者：姚尊金
@@ -42,12 +43,17 @@ public class CompositionController {
      * 添加一篇作文并增加题目的引用数
      * @return
      */
+//    400错误
+//    form-data、x-www-form-urlencoded：需要使用@RequestParam
+//    application/json： 需要使用@RequestBody
     @PostMapping("/add-a-composition-and-count")
-    public RestResponse AddCompositionAndCount(
-            @RequestParam("mycpt") CompositionEntity mycpt,
-            @RequestParam("cpt_reference") Integer cpt_reference){
-
-        int num = compositionService.addACompositionAndCount(mycpt, cpt_reference);
+//    public RestResponse AddCompositionAndCount(CompositionEntity mycpt, Integer cpt_reference){
+    public RestResponse AddCompositionAndCount(@RequestBody String jsonStr){
+        System.out.println(jsonStr);
+//        int num = compositionService.addACompositionAndCount(
+//                (CompositionEntity) map.get("mycpt"),
+//                (Integer) map.get("cpt_reference"));
+         int num=0;
 
         if(num == 1) {
             return RestResponse.succuess("添加成功");
