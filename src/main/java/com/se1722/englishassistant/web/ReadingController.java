@@ -274,6 +274,7 @@ public class ReadingController {
                 result.put("group", readingGroupEntity);
                 r.add(result);
             }
+
             return RestResponse.succuess(r);
         }
         return null;
