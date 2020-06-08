@@ -60,4 +60,15 @@ public class CompositionBankEntity {
         this.cpt_reference = cpt_reference;
     }
 
+    @Override
+    public String toString() {
+        return "CompositionBankEntity{" +
+                "cpt_id=" + cpt_id +
+                ", cpt_title='" + cpt_title + '\'' +
+                ", cpt_direction='" + cpt_direction + '\'' +
+                ", cpt_create_time='" + cpt_create_time + '\'' +
+                ", cpt_model='" + cpt_model + '\'' +
+                ", cpt_reference=" + cpt_reference +
+                '}';
+    }
 }

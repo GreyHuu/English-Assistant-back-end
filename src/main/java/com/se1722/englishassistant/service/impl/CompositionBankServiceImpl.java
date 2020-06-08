@@ -25,4 +25,22 @@ public class CompositionBankServiceImpl implements CompositionBankService {
     public List<CompositionBankEntity> getAllCompositions() {
         return compositionBankDao.getAllCompositions();
     }
+
+    /**
+     * 增加作文引用数
+     * @param cpt_id, reference
+     * @return
+     */
+    public int updateReference(int cpt_id, int reference) {
+        return compositionBankDao.updateReference(cpt_id, reference);
+    }
+
+    /**
+     * 通过作文题目的ID查询一篇作文题目
+     * @param cpt_id
+     * @return
+     */
+    public CompositionBankEntity getACompositionByID(int cpt_id){
+        return compositionBankDao.getACompositionByID(cpt_id);
+    }
 }

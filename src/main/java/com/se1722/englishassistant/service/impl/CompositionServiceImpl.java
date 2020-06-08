@@ -8,6 +8,7 @@ import com.se1722.englishassistant.service.CompositionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  *
@@ -19,19 +20,20 @@ public class CompositionServiceImpl implements CompositionService {
 
     @Resource
     private CompositionDao compositionDao;
-    @Resource
-    private CompositionBankDao compositionBankDao;
 
     /**
      * 添加一篇我的作文
      * @return
      */
-    public int addACompositionAndCount(CompositionEntity mycpt, int cpt_reference) {
-        //添加作文
-        compositionDao.addAComposition(mycpt);
-        //更新引用
-        compositionBankDao.countReference(mycpt.getCpt_id(), cpt_reference);
-
-        return 1;
+    public int addAComposition(CompositionEntity mycpt) {
+        return compositionDao.addAComposition(mycpt);
+    }
+    /**
+     * 查询我的所有作文
+     * @return
+     */
+    @Override
+    public List<CompositionEntity> getAllMyCompositions(int user_id) {
+        return compositionDao.getAllMyCompositions(user_id);
     }
 }

@@ -2,6 +2,7 @@ package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.CompositionEntity;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * 日期：2020/5/29 9:26
  */
 @Mapper
+@Component
 public interface CompositionDao {
 
     /**
@@ -26,15 +28,15 @@ public interface CompositionDao {
      * @return List<CompositionEntity>
      */
     @Select("SELECT * FROM composition WHERE mycpt_id=#{mycpt_id}")
-    public CompositionEntity getAnExisitingComposition(int mycpt_id);
+    public CompositionEntity getAnExistingComposition(int mycpt_id);
 
     /**
      *@description 添加一篇作文
      * @param mycpt
      * @return
      */
-    @Insert("INSERT INTO composition(cpt_id, user_id, mycpt, mycpt_create_time, mycpt_word_count) " +
-            "values(#{mycpt.cpt_id}, #{mycpt.user_id}, #{mycpt}, #{mycpt_create_time}, #{mycpt_word_count})")
+    @Insert("INSERT INTO composition(cpt_id, user_id, mycpt, mycpt_create_time, mycpt_word_count, mark) " +
+            "values(#{cpt_id}, #{user_id}, #{mycpt}, #{mycpt_create_time}, #{mycpt_word_count}, #{mark})")
     public int addAComposition(CompositionEntity mycpt);
 
     /**
@@ -51,7 +53,7 @@ public interface CompositionDao {
      * @return
      */
     @Update("UPDATE composition SET mycpt=#{mycpt.mycpt}, " +
-            "mycpt_create_time=#{mycpt.mycpt_create_time} WHERE mycpt_id=#{mycpt.mycpt_id}")
+            "mycpt_create_time=#{mycpt_create_time} WHERE mycpt_id=#{mycpt.mycpt_id}")
     public int updateMycptContent(CompositionEntity mycpt);
 
     /**

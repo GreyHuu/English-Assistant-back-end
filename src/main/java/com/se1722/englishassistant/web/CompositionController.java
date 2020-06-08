@@ -1,5 +1,6 @@
 package com.se1722.englishassistant.web;
 
+import com.alibaba.fastjson.JSON;
 import com.se1722.englishassistant.entity.CompositionBankEntity;
 import com.se1722.englishassistant.entity.CompositionEntity;
 import com.se1722.englishassistant.entity.CurrentUser;
@@ -7,15 +8,15 @@ import com.se1722.englishassistant.service.CompositionBankService;
 import com.se1722.englishassistant.service.CompositionService;
 import com.se1722.englishassistant.utils.RestResponse;
 import com.se1722.englishassistant.utils.SessionContent;
+import jdk.nashorn.internal.lookup.MethodHandleFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /*
  * 作者：姚尊金
@@ -50,6 +51,12 @@ public class CompositionController {
 
         return user.getId();
     }
+
+    /**
+     * 计算分数
+     * @param wordCount
+     * @return score
+     */
     public Integer getScore(int wordCount) {
         int baseScore = 70;
         int randomScore = new Random().nextInt(10) + 1;
@@ -83,26 +90,39 @@ public class CompositionController {
      * 添加一篇作文并增加题目的引用数
      * @return
      */
-//    400错误
-//    form-data、x-www-form-urlencoded：需要使用@RequestParam
-//    application/json： 需要使用@RequestBody
+//    当前只能接收到         cpt_reference  和  compositionEntity.cpt_id的参数            待修改
+    @ResponseBody
     @PostMapping("/add-a-composition-and-count/{cpt_reference}")
-    public RestResponse AddCompositionAndCount(
-            @PathVariable("cpt_reference") Integer cpt_reference,
-            @RequestBody CompositionEntity mycpt,
-            HttpServletRequest request){
-
+    public RestResponse AddCompositionAndCount(@PathVariable Integer cpt_reference,
+                                               @NotNull @RequestBody CompositionEntity compositionEntity,
+                                               HttpServletRequest request){
         user_id = getUserID(request);
-        mycpt.setUser_id(user_id);
-        mycpt.setMark(mycpt.getMycpt_word_count());
+        compositionEntity.setUser_id(user_id);
+        compositionEntity.setMark(getScore(compositionEntity.getMycpt_word_count()));
+        System.out.println("cpt="+compositionEntity.toString());
+        System.out.println("ref="+cpt_reference);
 
-        int num = compositionService.addACompositionAndCount(mycpt, cpt_reference);
+        int num = compositionService.addAComposition(compositionEntity);
+        int num2 = compositionBankService.updateReference(compositionEntity.getCpt_id(), cpt_reference);
 
-        if(num == 1) {
+        if(num == 1 && num2 == 1) {
             return RestResponse.succuess("添加成功");
-        } else if(num == 0)
+        } else if(num == 0 || num2 == 0)
         return RestResponse.fail("添加失败");
         else
             return RestResponse.fail("发生未知错误");
     }
+
+    @GetMapping("/get-all-my-compositions")
+    public RestResponse getAllMyCompositions(HttpServletRequest request) {
+        user_id = getUserID(request);
+        List<CompositionEntity> mycptList = compositionService.getAllMyCompositions(user_id);
+
+        for(CompositionEntity mycptListItem: mycptList) {
+            mycptListItem.setCpt_title(compositionBankService.getACompositionByID(mycptListItem.getCpt_id()).getCpt_title());
+        }
+
+        return RestResponse.succuess(mycptList);
+    }
+
 }

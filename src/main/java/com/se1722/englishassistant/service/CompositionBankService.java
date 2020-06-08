@@ -9,11 +9,10 @@ import java.util.List;
  * 日期：2020/6/1 10:37
  */
 public interface CompositionBankService {
-    /**
-     * 获得题库中的所有作文题
-     * @return
-     */
+
     public List<CompositionBankEntity> getAllCompositions();
 
+    public int updateReference(int cpt_id, int reference);
 
+    public CompositionBankEntity getACompositionByID(int cpt_id);
 }
