@@ -1,6 +1,7 @@
 package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.ReadingListEntity;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -67,7 +68,16 @@ public interface ReadingListDao {
     Integer insertReadingList(ReadingListEntity readingListEntity);
 
     /**
+     * 删除list
+     * @param id
+     * @return
+     */
+    @Delete("DELETE FROM reading_list WHERE id = #{id}")
+    Integer deleteReadingList(Integer id);
+
+    /**
      * 获得ReadingListEntity
+     *
      * @param id
      * @return
      */

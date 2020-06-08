@@ -53,4 +53,9 @@ public class ReadingListImpl implements ReadingListService {
     public List<ReadingListEntity> selectReadingListByGroupID(Integer id) {
         return readingListDao.selectReadingListByGroupID(id);
     }
+
+    @Override
+    public Integer deleteReadingList(Integer id) {
+        return readingListDao.deleteReadingList(id);
+    }
 }

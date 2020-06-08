@@ -15,4 +15,5 @@ public interface ReadingListService {
     ReadingListEntity getById(Integer id);
     int selectCountByUserID(Integer id);
     List<ReadingListEntity> selectReadingListByGroupID(Integer id);
+    Integer deleteReadingList(Integer id);
 }

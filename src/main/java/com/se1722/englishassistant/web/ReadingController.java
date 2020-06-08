@@ -1,5 +1,6 @@
 package com.se1722.englishassistant.web;
 
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.se1722.englishassistant.entity.*;
 import com.se1722.englishassistant.service.*;
 import com.se1722.englishassistant.utils.RestResponse;
@@ -238,6 +239,20 @@ public class ReadingController {
             if (r != null) return r;
         }
         return RestResponse.fail("查询失败");
+    }
+
+    /**
+     * 删除list
+     * @param params
+     * @return
+     */
+    @PostMapping("/delete-list")
+    public RestResponse deleteListById(@NotNull @RequestBody Map<String, Object> params) {
+        int id = Integer.parseInt(params.get("id").toString());
+        int res = readingListService.deleteReadingList(id);
+        if (res != 1)
+            return RestResponse.fail("删除失败");
+        return RestResponse.succuess();
     }
 
     /**
