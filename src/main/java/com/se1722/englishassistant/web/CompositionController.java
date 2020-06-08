@@ -1,11 +1,5 @@
 package com.se1722.englishassistant.web;
 
-/**
- * 作者：姚尊金
- * 日期：2020/6/7 1:41
- * 写作练习与前端的数据交互
- */
-
 import com.se1722.englishassistant.entity.CompositionBankEntity;
 import com.se1722.englishassistant.entity.CompositionEntity;
 import com.se1722.englishassistant.service.CompositionBankService;
@@ -17,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-
+/*
+ * 作者：姚尊金
+ * 日期：2020/6/7 1:41
+ * 写作练习与前端的数据交互
+ */
 @Slf4j
 @RestController
 @RequestMapping("/writing")
@@ -45,7 +43,7 @@ public class CompositionController {
      * @return
      */
     @PostMapping("/add-a-composition-and-count")
-    public RestResponse addAComposition(
+    public RestResponse AddCompositionAndCount(
             @RequestParam("mycpt") CompositionEntity mycpt,
             @RequestParam("cpt_reference") Integer cpt_reference){
 
@@ -57,6 +55,5 @@ public class CompositionController {
         return RestResponse.fail("添加失败");
         else
             return RestResponse.fail("发生未知错误");
-
     }
 }
