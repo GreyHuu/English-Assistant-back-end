@@ -29,4 +29,5 @@ public class WordServiceImpl implements WordService {
     public List<WordEntity> queryNewWord(Integer user_id) {
         return wordDao.findAllByUserId(user_id);
     }
+
 }

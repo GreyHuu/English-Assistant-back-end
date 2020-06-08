@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PlanService {
+    
     Integer savePlanDefault(Integer user_id);
 
     Integer updatePlan(WordUserPlansEntity plan);

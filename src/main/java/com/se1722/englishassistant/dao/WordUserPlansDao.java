@@ -56,5 +56,4 @@ public interface WordUserPlansDao {
     @Update("Update word_record set state = 1 where user_id=#{user_id} and state=0 limit 1")
     public Integer updateDailyWordState(Integer user_id);
 
-
 }

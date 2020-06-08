@@ -80,7 +80,11 @@ public class WordController {
     @DeleteMapping("/deleteWord/{word_id}")
     public RestResponse deleteWord(@PathVariable Integer word_id, HttpServletRequest request){
         user_id = getUser(request);
-        return RestResponse.succuess("删除成功",wordService.deleteWord(word_id, user_id));
+        Integer count = wordService.deleteWord(word_id, user_id);
+        if(count == 1){
+            return RestResponse.succuess("删除成功");
+        }
+        return RestResponse.succuess("删除失败");
     }
 
     /**

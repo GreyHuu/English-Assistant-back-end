@@ -57,7 +57,6 @@ public class PlanServiceImpl implements PlanService {
         System.out.println(userDaliyWordEntity.toString());
         //        通过计划查询单词
         List<WordEntity> wordEntityList = (List<WordEntity>) wordUserPlansDao.queryDailyWordByPlan(userDaliyWordEntity.getNumber(), userDaliyWordEntity.getWord_id_start(), userDaliyWordEntity.getType());
-
         return wordEntityList;
     }
 

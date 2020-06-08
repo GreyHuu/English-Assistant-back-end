@@ -60,6 +60,7 @@ public class PlanController {
     @PostMapping("/savePlanDailyNumber/{number}/{type}")
     public RestResponse savePlanDailyNumber(HttpServletRequest request, @PathVariable Integer number ,@PathVariable Integer type){
         user_id = getUser(request);
+        log.info("设置日计划");
         Integer count = planService.savePlanDailyNumber(number, user_id, type);
         if(count != 0){
             return RestResponse.succuess("设置计划成功");

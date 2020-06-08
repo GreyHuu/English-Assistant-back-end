@@ -23,7 +23,6 @@ public interface WordDao {
     Integer delete(@Param(value="word_id")Integer word_id, @Param(value="user_id")Integer user_id);
     public int deleteByPrimaryKey(Integer id);
 
-
 //    根据用户id查询所有生词
     @Select("select word.* from word, word_new where word.id = word_new.word_id and word_new.user_id = #{user_id}")
     List<WordEntity> findAllByUserId(Integer user_id);
