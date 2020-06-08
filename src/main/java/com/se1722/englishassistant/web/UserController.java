@@ -47,7 +47,6 @@ public class UserController {
     }
 
 
-
     /**
      * 登录
      *
@@ -63,7 +62,7 @@ public class UserController {
             if (BCrypt.checkpw(param.get("password").toString(), userEntity.getPassword())) {
 //                当前登录的用户
                 CurrentUser currentUser =
-                        new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+                        new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime(), userEntity.getEmail());
 //               清空全部的Session
                 SessionContent.removeAllSession();
                 HttpSession session = SessionContent.getNewSession();
@@ -97,8 +96,31 @@ public class UserController {
         CurrentUser currentUser = (CurrentUser) session.getAttribute(CURRENT_USER_SESSION);
         if (currentUser == null)
             return RestResponse.fail("当前无登录的用户");
-        else
+        else {
+            UserEntity user = userService.findUserById(currentUser.getId());
+            currentUser.setEmail(user.getEmail());
+            currentUser.setMobile(user.getMobile());
+            currentUser.setNick_name(user.getNick_name());
+            session.setAttribute(CURRENT_USER_SESSION, currentUser);
             return RestResponse.succuess(currentUser);
+        }
+
+    }
+
+    /**
+     * 更新user
+     *
+     * @param params
+     * @return
+     */
+    @PostMapping("/update-user")
+    public RestResponse updateUser(@RequestBody Map<String, Object> params) {
+        CurrentUser currentUser =
+                new CurrentUser(params.get("nick_name").toString(), params.get("mobile").toString(), params.get("email").toString(), Integer.parseInt(params.get("id").toString()));
+        int i = userService.update(currentUser);
+        if (i != 1)
+            return RestResponse.fail("更新失败");
+        return RestResponse.succuess();
     }
 
     /**
@@ -111,7 +133,7 @@ public class UserController {
     public RestResponse loginByPhone(@NotNull @RequestBody Map<String, String> param) {
         UserEntity userEntity = userService.findUserByPhone(param.get("phone"));
         CurrentUser currentUser =
-                new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+                new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime(), userEntity.getEmail());
         if (currentUser != null) {
             SessionContent.removeAllSession();
             HttpSession session = SessionContent.getNewSession();
