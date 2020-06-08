@@ -11,12 +11,8 @@ public class NewsCommentsEntity {
 
     //评论内容
     private String comment;
-    //用户id
     private Integer user_id;
-    //新闻id
     private Integer new_id;
-    //评论id
-    private Integer c_id;
 
     public String getComment() {
         return comment;
@@ -36,6 +32,5 @@ public class NewsCommentsEntity {
     public void setNew_id(Integer new_id) {
         this.new_id = new_id;
     }
-    public Integer getC_id() { return c_id; }
-    public void setC_id(Integer c_id) { this.c_id = c_id; }
+
 }

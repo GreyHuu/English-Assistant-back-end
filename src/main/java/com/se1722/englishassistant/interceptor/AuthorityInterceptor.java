@@ -38,18 +38,8 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         NOT_INTERCEPT_URI.add("/error");
 //        通过手机验证码登录
         NOT_INTERCEPT_URI.add("/users/login-by-phone");
-        //查询全部新闻信息
-        NOT_INTERCEPT_URI.add("/news/get-all-news");
-        //查询全部评论信息
-        NOT_INTERCEPT_URI.add("/comments/get-all-comments");
-//查询当前登录用户得所有评论
-        NOT_INTERCEPT_URI.add("/comments/get-the-comments");
-        //获得当前用户信息
-        NOT_INTERCEPT_URI.add("/users/get-current-user");
-        //删除评论o
-        NOT_INTERCEPT_URI.add("/comments/delete-the-comments");
-        //添加评论
-        NOT_INTERCEPT_URI.add("/comments/insert-the-comments");
+//        注销登录
+        NOT_INTERCEPT_URI.add("/users/logout");
     }
 
     /**

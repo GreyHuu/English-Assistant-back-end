@@ -1,5 +1,7 @@
 package com.se1722.englishassistant.dao;
 
+import com.se1722.englishassistant.entity.ReadingListEntity;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -35,4 +37,21 @@ public interface ReadingListDao {
      */
     @Select("select max(time)  from reading_list where group_id = #{id}")
     Date selectLastTimeByGroupID(Integer id);
+
+    /**
+     * 插入历史记录
+     *
+     * @param readingListEntity
+     * @return
+     */
+    @Insert("INSERT INTO reading_list(id,group_id,user_id,score,time,during_time) VALUES(#{id},#{group_id},#{user_id},#{score},#{time},#{during_time})")
+    Integer insertReadingList(ReadingListEntity readingListEntity);
+
+    /**
+     * 获得ReadingListEntity
+     * @param id
+     * @return
+     */
+    @Select("select * from reading_list where id = #{id}")
+    ReadingListEntity getById(Integer id);
 }
