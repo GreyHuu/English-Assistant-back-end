@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface CompositionService {
 
+    public List<CompositionEntity> getAllMyCompositions(Integer user_id);
+
     public int addAComposition(CompositionEntity mycpt);
 
-    public List<CompositionEntity> getAllMyCompositions(int user_id);
+    public int deleteMyCompositionById(Integer mycpt_id);
 }

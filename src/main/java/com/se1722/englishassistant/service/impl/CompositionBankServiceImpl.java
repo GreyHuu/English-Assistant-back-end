@@ -3,6 +3,7 @@ package com.se1722.englishassistant.service.impl;
 import com.se1722.englishassistant.dao.CompositionBankDao;
 import com.se1722.englishassistant.entity.CompositionBankEntity;
 import com.se1722.englishassistant.service.CompositionBankService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import java.util.List;
  * 作者：姚尊金
  * 日期：2020/6/1 10:38
  */
+@Slf4j
 @Service
 public class CompositionBankServiceImpl implements CompositionBankService {
 
@@ -31,8 +33,8 @@ public class CompositionBankServiceImpl implements CompositionBankService {
      * @param cpt_id, reference
      * @return
      */
-    public int updateReference(int cpt_id, int reference) {
-        return compositionBankDao.updateReference(cpt_id, reference);
+    public int updateReference(Integer cpt_id, Integer cpt_reference) {
+        return compositionBankDao.updateReference(cpt_id, cpt_reference);
     }
 
     /**
@@ -40,7 +42,9 @@ public class CompositionBankServiceImpl implements CompositionBankService {
      * @param cpt_id
      * @return
      */
-    public CompositionBankEntity getACompositionByID(int cpt_id){
+    public CompositionBankEntity getACompositionByID(Integer cpt_id){
         return compositionBankDao.getACompositionByID(cpt_id);
     }
+
+
 }

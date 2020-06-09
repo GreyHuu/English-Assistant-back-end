@@ -20,15 +20,7 @@ public interface CompositionDao {
      * @return List<CompositionEntity>
      */
     @Select("SELECT * FROM composition WHERE user_id=#{user_id}")
-    public List<CompositionEntity> getAllMyCompositions(int user_id);
-
-    /**
-     * @description 通过我的作文id查询一篇作文
-     * @param mycpt_id
-     * @return List<CompositionEntity>
-     */
-    @Select("SELECT * FROM composition WHERE mycpt_id=#{mycpt_id}")
-    public CompositionEntity getAnExistingComposition(int mycpt_id);
+    public List<CompositionEntity> getAllMyCompositions(Integer user_id);
 
     /**
      *@description 添加一篇作文
@@ -40,12 +32,28 @@ public interface CompositionDao {
     public int addAComposition(CompositionEntity mycpt);
 
     /**
-     *@description 删除一篇作文
-     * @param mycpt
+     * 删除一篇我的作文
+     * @param mycpt_id
      * @return
      */
-    @Delete("DELETE composition WHERE mycpt_id=#{mycpt.mycpt_id}")
-    public int deleteAComposition(CompositionEntity mycpt);
+    @Delete("DELETE FROM composition WHERE mycpt_id=#{mycpt_id}")
+    public int deleteMyCompositionById(Integer mycpt_id);
+
+
+
+
+
+
+
+
+
+    /**
+     * @description 通过我的作文id查询一篇作文
+     * @param mycpt_id
+     * @return List<CompositionEntity>
+     */
+    @Select("SELECT * FROM composition WHERE mycpt_id=#{mycpt_id}")
+    public CompositionEntity getAnExistingComposition(int mycpt_id);
 
     /**
      *@description 更新作文内容

@@ -22,18 +22,30 @@ public class CompositionServiceImpl implements CompositionService {
     private CompositionDao compositionDao;
 
     /**
+     * 查询我的所有作文
+     * @return
+     */
+    @Override
+    public List<CompositionEntity> getAllMyCompositions(Integer user_id) {
+        return compositionDao.getAllMyCompositions(user_id);
+    }
+
+    /**
      * 添加一篇我的作文
      * @return
      */
     public int addAComposition(CompositionEntity mycpt) {
         return compositionDao.addAComposition(mycpt);
     }
+
     /**
-     * 查询我的所有作文
+     * 删除一篇我的作文
+     * @param mycpt_id
      * @return
      */
     @Override
-    public List<CompositionEntity> getAllMyCompositions(int user_id) {
-        return compositionDao.getAllMyCompositions(user_id);
+    public int deleteMyCompositionById(Integer mycpt_id) {
+        return compositionDao.deleteMyCompositionById(mycpt_id);
     }
+
 }

@@ -12,7 +12,8 @@ public interface CompositionBankService {
 
     public List<CompositionBankEntity> getAllCompositions();
 
-    public int updateReference(int cpt_id, int reference);
+    public int updateReference(Integer cpt_id, Integer cpt_reference);
 
-    public CompositionBankEntity getACompositionByID(int cpt_id);
+    public CompositionBankEntity getACompositionByID(Integer cpt_id);
+
 }
