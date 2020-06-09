@@ -15,4 +15,8 @@ public interface CompositionService {
     public int addAComposition(CompositionEntity mycpt);
 
     public int deleteMyCompositionById(Integer mycpt_id);
+
+    public CompositionEntity getAnExistingComposition(Integer mycpt_id);
+
+    public int updateMyComposition(CompositionEntity mycpt);
 }

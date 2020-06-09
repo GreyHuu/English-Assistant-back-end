@@ -37,9 +37,9 @@ public class CompositionController {
     @Resource
     private CompositionService compositionService;
 
-
     /**
-     *获取全部作文题目
+     * 获取全部作文题目
+     * @return
      */
     @GetMapping("/get-all-compositions")
     public RestResponse getAllCompositions() {
@@ -98,6 +98,7 @@ public class CompositionController {
 
         return RestResponse.succuess(mycptList);
     }
+
     /**
      * 根据id删除一篇我的作文
      * @param params
@@ -118,6 +119,59 @@ public class CompositionController {
     }
 
     /**
+     * 获得一篇我的作文信息，包括作文题目、要求和范文
+     * @param params
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/get-my-composition")
+    public RestResponse getAnExistingComposition(@NotNull @RequestBody Map<String, Object> params) {
+        Integer mycpt_id = Integer.valueOf(params.get("mycpt_id").toString());
+//        log.info("controller中getAnExistingComposition的参数mycpt_id=" + mycpt_id);
+
+        CompositionEntity compositionEntity = compositionService.getAnExistingComposition(mycpt_id);
+        CompositionBankEntity compositionBankEntity = compositionBankService.getACompositionByID(compositionEntity.getCpt_id());
+
+        compositionEntity.setCpt_title(compositionBankEntity.getCpt_title());
+        compositionEntity.setCpt_direction(compositionBankEntity.getCpt_direction());
+        compositionEntity.setCpt_model(compositionBankEntity.getCpt_model());
+
+        return RestResponse.succuess("success", compositionEntity);
+    }
+
+    /**
+     * 修改我的作文
+     * @param params
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/update-my-composition/{mycpt_id}")
+    public RestResponse updateMyComposition( @NotNull @RequestBody Map<String, Object> params) {
+        Integer mycpt_id = Integer.valueOf(params.get("mycpt_id").toString());
+        String mycpt = params.get("mycpt").toString();
+        CompositionEntity compositionEntityPre = compositionService.getAnExistingComposition(mycpt_id);
+
+        CompositionEntity compositionEntityNew = new CompositionEntity();
+        compositionEntityNew.setMycpt_id(mycpt_id);
+        compositionEntityNew.setCpt_id(compositionEntityPre.getCpt_id());
+        compositionEntityNew.setUser_id(compositionEntityPre.getUser_id());
+        compositionEntityNew.setMycpt(mycpt);
+        compositionEntityNew.setMycpt_create_time(getCurrentTime());
+        compositionEntityNew.setMycpt_word_count(getWordCount(mycpt));
+        compositionEntityNew.setMark(getScore(getWordCount(mycpt)));
+        compositionEntityNew.setSubmit_times(compositionEntityPre.getSubmit_times()+1);
+
+        int num = compositionService.updateMyComposition(compositionEntityNew);
+
+        if(num == 1) {
+            return RestResponse.succuess("修改成功");
+        } else if(num == 0)
+            return RestResponse.fail("修改失败");
+        else
+            return RestResponse.fail("发生未知错误");
+    }
+
+    /**
      * 获取当前用户的ID
      * @param request
      * @return user_id
@@ -131,6 +185,7 @@ public class CompositionController {
 
         return user.getId();
     }
+
 
     /**
      * 计算分数

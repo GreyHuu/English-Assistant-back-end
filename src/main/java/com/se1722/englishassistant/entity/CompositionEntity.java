@@ -25,9 +25,17 @@ public class CompositionEntity {
     private Integer mark;
     //提交次数
     private Integer submit_times;
+
+    //非映射表中数据
     //作文题目标题
     @TableField(exist = false)
     private String cpt_title;
+    //作文题目要求
+    @TableField(exist = false)
+    private String cpt_direction;
+    //作文题目的题目
+    @TableField(exist = false)
+    private String cpt_model;
 
     public Integer getMycpt_id() {
         return mycpt_id;
@@ -101,6 +109,22 @@ public class CompositionEntity {
         this.cpt_title = cpt_title;
     }
 
+    public String getCpt_direction() {
+        return cpt_direction;
+    }
+
+    public void setCpt_direction(String cpt_direction) {
+        this.cpt_direction = cpt_direction;
+    }
+
+    public String getCpt_model() {
+        return cpt_model;
+    }
+
+    public void setCpt_model(String cpt_model) {
+        this.cpt_model = cpt_model;
+    }
+
     @Override
     public String toString() {
         return "CompositionEntity{" +
@@ -112,6 +136,9 @@ public class CompositionEntity {
                 ", mycpt_word_count=" + mycpt_word_count +
                 ", mark=" + mark +
                 ", submit_times=" + submit_times +
+                ", cpt_title='" + cpt_title + '\'' +
+                ", cpt_direction='" + cpt_direction + '\'' +
+                ", cpt_model='" + cpt_model + '\'' +
                 '}';
     }
 }
