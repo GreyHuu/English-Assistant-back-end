@@ -8,6 +8,7 @@ import com.se1722.englishassistant.service.CompositionService;
 import com.se1722.englishassistant.utils.RestResponse;
 import com.se1722.englishassistant.utils.SessionContent;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
 
@@ -121,7 +122,7 @@ public class CompositionController {
      * @param request
      * @return user_id
      */
-    private Integer getUserID(HttpServletRequest request){
+    private Integer getUserID(@NotNull HttpServletRequest request){
         String sessionId = request.getHeader("Session_Id");
         //获取当前session
         HttpSession session = SessionContent.getSession(sessionId);
@@ -136,6 +137,7 @@ public class CompositionController {
      * @param wordCount
      * @return score
      */
+    @NotNull
     private Integer getScore(int wordCount) {
         int baseScore = 70;
         int randomScore = new Random().nextInt(10) + 1;
@@ -157,6 +159,7 @@ public class CompositionController {
      * 获取当前时间
      * @return
      */
+    @NotNull
     private String getCurrentTime(){
         //设置日期格式
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -164,7 +167,14 @@ public class CompositionController {
         return sdf.format(new Date());
     }
 
-    private Integer getWordCount(String mycpt) {
+    /**
+     * 统计作文字数
+     * @param mycpt
+     * @return
+     */
+    @Contract(pure = true)
+    @NotNull
+    private Integer getWordCount(@NotNull String mycpt) {
         return mycpt.split(" ").length;
     }
 }
