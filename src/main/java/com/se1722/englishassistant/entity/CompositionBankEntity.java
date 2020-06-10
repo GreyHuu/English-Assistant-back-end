@@ -1,5 +1,7 @@
 package com.se1722.englishassistant.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+
 /**
  * @ClassName CompoitionBankEntity
  * @Description 
@@ -22,6 +24,11 @@ public class CompositionBankEntity {
     private String cpt_model;
     //引用次数
     private Integer cpt_reference;
+
+    //非映射表中数据
+    //我的作文ID
+    @TableField(exist = false)
+    private Integer mycpt_id;
 
     public Integer getCpt_id() {
         return cpt_id;
@@ -60,6 +67,14 @@ public class CompositionBankEntity {
         this.cpt_reference = cpt_reference;
     }
 
+    public Integer getMycpt_id() {
+        return mycpt_id;
+    }
+
+    public void setMycpt_id(Integer mycpt_id) {
+        this.mycpt_id = mycpt_id;
+    }
+
     @Override
     public String toString() {
         return "CompositionBankEntity{" +
@@ -69,6 +84,7 @@ public class CompositionBankEntity {
                 ", cpt_create_time='" + cpt_create_time + '\'' +
                 ", cpt_model='" + cpt_model + '\'' +
                 ", cpt_reference=" + cpt_reference +
+                ", mycpt_id=" + mycpt_id +
                 '}';
     }
 }
