@@ -46,5 +46,15 @@ public class CompositionBankServiceImpl implements CompositionBankService {
         return compositionBankDao.getACompositionByID(cpt_id);
     }
 
+    /**
+     * 通过关键词搜索作文题
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<CompositionBankEntity> getCompositionQuestionByKeyword(String keyword) {
+        return compositionBankDao.getCompositionQuestionByKeyword(keyword);
+    }
+
 
 }

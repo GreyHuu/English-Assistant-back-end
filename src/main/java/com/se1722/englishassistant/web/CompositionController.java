@@ -145,8 +145,8 @@ public class CompositionController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/update-my-composition/{mycpt_id}")
-    public RestResponse updateMyComposition( @NotNull @RequestBody Map<String, Object> params) {
+    @PostMapping("/update-my-composition")
+    public RestResponse updateMyComposition( @NotNull @RequestBody Map<String, Object> params ) {
         Integer mycpt_id = Integer.valueOf(params.get("mycpt_id").toString());
         String mycpt = params.get("mycpt").toString();
         CompositionEntity compositionEntityPre = compositionService.getAnExistingComposition(mycpt_id);
@@ -169,6 +169,18 @@ public class CompositionController {
             return RestResponse.fail("修改失败");
         else
             return RestResponse.fail("发生未知错误");
+    }
+
+    /**
+     * 通过关键词搜索作文题
+     * @param params
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("get-composition-question-keyword")
+    public RestResponse getCompositionQuestionByKeyword(@NotNull @RequestBody Map<String, Object> params) {
+        String keyword = params.get("keyword").toString();
+        return RestResponse.succuess( compositionBankService.getCompositionQuestionByKeyword(keyword));
     }
 
     /**

@@ -16,4 +16,5 @@ public interface CompositionBankService {
 
     public CompositionBankEntity getACompositionByID(Integer cpt_id);
 
+    public List<CompositionBankEntity> getCompositionQuestionByKeyword(String keyword);
 }

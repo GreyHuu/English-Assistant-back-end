@@ -32,26 +32,15 @@ public interface CompositionBankDao {
     @Select("SELECT * FROM composition_bank WHERE cpt_id=#{cpt_id}")
     public CompositionBankEntity getACompositionByID(Integer cpt_id);
 
-
-
-
-
-
-
-
-
-
-
-
     /**
-     * @description 通过关键词搜索作文题
+     * 通过关键词搜索作文题
      * @param keyword
      * @return List<CompositionBankEntity>
      */
-    @Select("SELECT * FROM composition_bank WHERE keyword=#{keyword}")
-    public List<CompositionBankEntity> getCompositionByKeyword(String keyword);
-
-    public int insertSelective(CompositionBankEntity record);
+    @Select("SELECT * FROM composition_bank WHERE cpt_title LIKE concat('%',#{keyword},'%') " +
+            "OR cpt_direction LIKE concat('%',#{keyword},'%')")
+    public List<CompositionBankEntity> getCompositionQuestionByKeyword(String keyword);
+//    SELECT * FROM composition_bank WHERE cpt_title LIKE '%雅思%' OR cpt_direction LIKE '%雅思%';
 
     public CompositionBankEntity selectByPrimaryKey(Integer cpt_id);
 
