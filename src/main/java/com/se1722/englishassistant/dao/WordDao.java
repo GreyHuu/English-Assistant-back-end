@@ -20,4 +20,7 @@ public interface WordDao {
 
 
 
+//    通过单词查意思
+    @Select("select * from word where englishWord like CONCAT('%', #{word}, '%') or chineseWord like CONCAT('%', #{word}, '%')")
+    List<WordEntity> getMeanByWord(@Param(value = "word") String word);
 }

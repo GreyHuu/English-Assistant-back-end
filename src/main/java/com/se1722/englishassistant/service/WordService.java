@@ -8,4 +8,6 @@ public interface WordService {
     List<WordEntity> queryWord(int type);
     Integer saveWord(Integer word_id, Integer user_id);
     Integer deleteWord(Integer word_id, Integer user_id);
+    List<WordEntity> queryNewWord(Integer user_id);
+    List<WordEntity> getMeanByWord(String word);
 }
