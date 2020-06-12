@@ -40,7 +40,7 @@ public class ReadingController {
     @GetMapping("/get-all-groups")
     public RestResponse getAllGroups() {
         List<ReadingGroupEntity> readingGroupEntities = readingService.getAllReadingGroup();
-        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<>();
+        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<RestReadingGroupEntity>();
         if (readingGroupEntities != null) {
             // 循环获得关联信息
             for (ReadingGroupEntity readingGroupEntity : readingGroupEntities) {
@@ -126,7 +126,7 @@ public class ReadingController {
     public RestResponse getQuestionsByReadingId(@NotNull @RequestBody Map<String, Object> params) {
         String questionIds = readingQuestionGroupService.getQuestionsIdByReadingId(Integer.valueOf(params.get("id").toString()));
         List<String> ids = Arrays.asList(questionIds.split(","));
-        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<>();
+        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<ReadingQuestionEntity>();
         for (String id : ids) {
             ReadingQuestionEntity readingQuestionEntity = readingQuestionService.selectByPrimaryKey(Integer.valueOf(id));
             readingQuestionEntities.add(readingQuestionEntity);

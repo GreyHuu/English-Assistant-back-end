@@ -28,4 +28,7 @@ public interface WordDao {
     @Select("select word.* from word, word_new where word.id = word_new.word_id and word_new.user_id = #{user_id}")
     List<WordEntity> findAllByUserId(Integer user_id);
 
+//    通过单词查意思
+    @Select("select * from word where englishWord like CONCAT('%', #{word}, '%') or chineseWord like CONCAT('%', #{word}, '%')")
+    List<WordEntity> getMeanByWord(@Param(value = "word") String word);
 }
