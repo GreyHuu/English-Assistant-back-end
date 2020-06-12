@@ -55,7 +55,7 @@ public class PhoneCodeController {
             HttpSession session = SessionContent.getNewSession();
             session.setAttribute(CURRENT_CODE, code);
             SessionContent.setSession(session.getId(), session);
-            HashMap<String, String> result = new HashMap<>();
+            HashMap<String, String> result = new HashMap<String, String>();
             result.put("session", session.getId());
             SessionContent.updateSession(session.getId(), session);
             return RestResponse.succuess("验证码发送成功", result);
