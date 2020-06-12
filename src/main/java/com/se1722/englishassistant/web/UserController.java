@@ -66,7 +66,14 @@ public class UserController {
             if (BCrypt.checkpw(param.get("password").toString(), userEntity.getPassword())) {
 //                当前登录的用户
                 CurrentUser currentUser =
+<<<<<<< HEAD
+                        new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+<<<<<<< HEAD
+=======
+=======
                         new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime(), userEntity.getEmail());
+>>>>>>> 6dd3e96d2ffd21e6193be656030df317e630fd27
+>>>>>>> 9c67d729159ae1d7701985e1b85273f631d3f496
 //               清空全部的Session
                 SessionContent.removeAllSession();
                 HttpSession session = SessionContent.getNewSession();
@@ -146,6 +153,47 @@ public class UserController {
             String token = TokenUtil.getToken(currentUser);
 //                放入返回的map中
             HashMap<String, String> result = new HashMap<>();
+            result.put("userName", currentUser.getNick_name());
+            result.put("token", token);
+            result.put("session", session.getId());
+            SessionContent.updateSession(session.getId(), session);
+            return RestResponse.succuess("登录成功", result);
+        } else {
+            return RestResponse.fail("当前手机号未注册，请先注册");
+        }
+
+    }
+
+    /**
+     * 注销登录
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    public RestResponse userLogout() {
+        SessionContent.removeAllSession();
+        return RestResponse.succuess("注销成功");
+    }
+
+    /**
+     * 手机验证码登录
+     *
+     * @param param
+     * @return
+     */
+    @PostMapping("/login-by-phone")
+    public RestResponse loginByPhone(@NotNull @RequestBody Map<String, String> param) {
+        UserEntity userEntity = userService.findUserByPhone(param.get("phone"));
+        CurrentUser currentUser =
+                new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+        if (currentUser != null) {
+            SessionContent.removeAllSession();
+            HttpSession session = SessionContent.getNewSession();
+            session.setAttribute(CURRENT_USER_SESSION, currentUser);
+//                生成token
+            String token = TokenUtil.getToken(currentUser);
+//                放入返回的map中
+            HashMap<String, String> result = new HashMap<String, String>();
             result.put("userName", currentUser.getNick_name());
             result.put("token", token);
             result.put("session", session.getId());
