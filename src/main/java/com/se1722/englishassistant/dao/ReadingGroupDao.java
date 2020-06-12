@@ -35,10 +35,18 @@ public interface ReadingGroupDao {
     @Select("SELECT full_mark FROM reading_group WHERE id = #{id} ")
     Double selectFullMarkById(Integer id);
 
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    @Delete("DELETE FROM reading_group WHERE id = #{id} ")
     int deleteByPrimaryKey(Integer id);
 
     int insertSelective(ReadingGroupEntity record);
 
+    @Select("SELECT * FROM reading_group WHERE id = #{id} ")
     ReadingGroupEntity selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ReadingGroupEntity record);

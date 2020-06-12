@@ -25,5 +25,4 @@ public interface PlanService {
     Integer updateDailyWordState(Integer user_id);
 
     Integer deleteDailyWordInPlan(Integer user_id);
-	
 }
