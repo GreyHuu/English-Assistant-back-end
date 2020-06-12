@@ -2,6 +2,7 @@ package com.se1722.englishassistant.web;
 
 import com.se1722.englishassistant.entity.CurrentUser;
 import com.se1722.englishassistant.entity.UserEntity;
+import com.se1722.englishassistant.service.PlanService;
 import com.se1722.englishassistant.service.UserService;
 import com.se1722.englishassistant.utils.BeijingTime;
 import com.se1722.englishassistant.utils.RestResponse;
@@ -36,6 +37,9 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private PlanService planService;
+
     /**
      * 获得全部的用户
      *
@@ -62,7 +66,11 @@ public class UserController {
             if (BCrypt.checkpw(param.get("password").toString(), userEntity.getPassword())) {
 //                当前登录的用户
                 CurrentUser currentUser =
+<<<<<<< HEAD
+                        new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+=======
                         new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime(), userEntity.getEmail());
+>>>>>>> 6dd3e96d2ffd21e6193be656030df317e630fd27
 //               清空全部的Session
                 SessionContent.removeAllSession();
                 HttpSession session = SessionContent.getNewSession();
@@ -165,6 +173,47 @@ public class UserController {
     }
 
     /**
+     * 手机验证码登录
+     *
+     * @param param
+     * @return
+     */
+    @PostMapping("/login-by-phone")
+    public RestResponse loginByPhone(@NotNull @RequestBody Map<String, String> param) {
+        UserEntity userEntity = userService.findUserByPhone(param.get("phone"));
+        CurrentUser currentUser =
+                new CurrentUser(userEntity.getId(), userEntity.getNick_name(), userEntity.getMobile(), BeijingTime.getChinaTime());
+        if (currentUser != null) {
+            SessionContent.removeAllSession();
+            HttpSession session = SessionContent.getNewSession();
+            session.setAttribute(CURRENT_USER_SESSION, currentUser);
+//                生成token
+            String token = TokenUtil.getToken(currentUser);
+//                放入返回的map中
+            HashMap<String, String> result = new HashMap<String, String>();
+            result.put("userName", currentUser.getNick_name());
+            result.put("token", token);
+            result.put("session", session.getId());
+            SessionContent.updateSession(session.getId(), session);
+            return RestResponse.succuess("登录成功", result);
+        } else {
+            return RestResponse.fail("当前手机号未注册，请先注册");
+        }
+
+    }
+
+    /**
+     * 注销登录
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    public RestResponse userLogout() {
+        SessionContent.removeAllSession();
+        return RestResponse.succuess("注销成功");
+    }
+
+    /**
      * 注册用户
      *
      * @param userEntity
@@ -181,7 +230,11 @@ public class UserController {
 //        使用jBCrypt对密码进行加密  密码加密后重新放入对象中
         userEntity.setPassword(BCrypt.hashpw(userEntity.getPassword(), BCrypt.gensalt(4)));
         int res = userService.addUser(userEntity);
-        if (res == 1) {
+        UserEntity user1 = userService.findUserByPhone(userEntity.getMobile());
+        log.info("注册成功");
+        log.info("初始化背诵计划");
+        int rs = planService.savePlanDailyNumber(200, user1.getId(), 0);
+        if (res == 1 && rs == 1) {
             return RestResponse.succuess("注册成功，请登录");
         }
         return RestResponse.fail();
