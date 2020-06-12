@@ -106,7 +106,7 @@ public class ReadingController {
     public RestResponse getQuestionsByReadingId(@NotNull @RequestBody Map<String, Object> params) {
         String questionIds = readingQuestionGroupService.getQuestionsIdByReadingId(Integer.valueOf(params.get("id").toString()));
         List<String> ids = Arrays.asList(questionIds.split(","));
-        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<>();
+        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<ReadingQuestionEntity>();
         for (String id : ids) {
             ReadingQuestionEntity readingQuestionEntity = readingQuestionService.selectByPrimaryKey(Integer.valueOf(id));
             readingQuestionEntities.add(readingQuestionEntity);
