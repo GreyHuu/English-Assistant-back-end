@@ -1,8 +1,9 @@
 package com.se1722.englishassistant.dao;
 
 import com.se1722.englishassistant.entity.CompositionBankEntity;
-import org.apache.ibatis.annotations.*;
-
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 @Mapper
@@ -17,33 +18,36 @@ public interface CompositionBankDao {
     public List<CompositionBankEntity> getAllCompositions();
 
     /**
-     *@description 增加作文引用数
-     * @param cpt_id,cpt_reference
-     * @return 1/0
+     * @description 通过关键词搜索作文题
+     * @param keyword
+     * @return List<CompositionBankEntity>
      */
-    @Update("UPDATE composition_bank SET cpt_reference=#{cpt_reference} WHERE cpt_id=#{cpt_id}")
-    public int updateReference(@Param("cpt_id") Integer cpt_id, @Param("cpt_reference") Integer cpt_reference);
+    @Select("SELECT * FROM composition_bank WHERE keyword=#{keyword}")
+    public List<CompositionBankEntity> getAllCompositionsByKeyword(String keyword);
 
     /**
-     * 通过作文题目的ID查询一篇作文题目
+     *@description 通过作文题目的ID查询一篇作文题目
      * @param cpt_id
      * @return CompositionBankEntity
      */
     @Select("SELECT * FROM composition_bank WHERE cpt_id=#{cpt_id}")
-    public CompositionBankEntity getACompositionByID(Integer cpt_id);
+    public CompositionBankEntity getAComposition(int cpt_id);
 
     /**
-     * 通过关键词搜索作文题
-     * @param keyword
-     * @return List<CompositionBankEntity>
+     *@description 增加作文引用数
+     * @param cpt_id
+     * @return 1/0
      */
-    @Select("SELECT * FROM composition_bank WHERE cpt_title LIKE concat('%',#{keyword},'%') " +
-            "OR cpt_direction LIKE concat('%',#{keyword},'%')")
-    public List<CompositionBankEntity> getCompositionQuestionByKeyword(String keyword);
-//    SELECT * FROM composition_bank WHERE cpt_title LIKE '%雅思%' OR cpt_direction LIKE '%雅思%';
+    @Update("UPDATE user SET cpt_reference=#{cpt_reference} WHERE cpt_id=#{cpt_id}")
+    public int countReference(int cpt_id, int cpt_reference);
+
+    public int deleteByPrimaryKey(Integer cpt_id);
+
+    public int insertSelective(CompositionBankEntity record);
 
     public CompositionBankEntity selectByPrimaryKey(Integer cpt_id);
 
     public int updateByPrimaryKeySelective(CompositionBankEntity record);
+
 
 }

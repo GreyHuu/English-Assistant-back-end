@@ -1,6 +1,5 @@
 package com.se1722.englishassistant.entity;
 
-import javax.persistence.Id;
 /**
  * @author 15197
  * @version 1.0
@@ -10,7 +9,6 @@ import javax.persistence.Id;
  */
 public class ReadingGroupEntity {
 
-    @Id
     private Integer id;
     //组别名称
     private String title;

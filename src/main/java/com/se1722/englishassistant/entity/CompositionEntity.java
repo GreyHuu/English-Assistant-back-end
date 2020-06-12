@@ -1,6 +1,5 @@
 package com.se1722.englishassistant.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 /**
  * 类名：CompositionEntity
  * 描述：我的作文实体类
@@ -23,19 +22,6 @@ public class CompositionEntity {
     private Integer mycpt_word_count;
     //作文分数
     private Integer mark;
-    //提交次数
-    private Integer submit_times;
-
-    //非映射表中数据
-    //作文题目标题
-    @TableField(exist = false)
-    private String cpt_title;
-    //作文题目要求
-    @TableField(exist = false)
-    private String cpt_direction;
-    //作文题目的题目
-    @TableField(exist = false)
-    private String cpt_model;
 
     public Integer getMycpt_id() {
         return mycpt_id;
@@ -91,54 +77,5 @@ public class CompositionEntity {
 
     public void setMark(Integer mark) {
         this.mark = mark;
-    }
-
-    public Integer getSubmit_times() {
-        return submit_times;
-    }
-
-    public void setSubmit_times(Integer submit_times) {
-        this.submit_times = submit_times;
-    }
-
-    public String getCpt_title() {
-        return cpt_title;
-    }
-
-    public void setCpt_title(String cpt_title) {
-        this.cpt_title = cpt_title;
-    }
-
-    public String getCpt_direction() {
-        return cpt_direction;
-    }
-
-    public void setCpt_direction(String cpt_direction) {
-        this.cpt_direction = cpt_direction;
-    }
-
-    public String getCpt_model() {
-        return cpt_model;
-    }
-
-    public void setCpt_model(String cpt_model) {
-        this.cpt_model = cpt_model;
-    }
-
-    @Override
-    public String toString() {
-        return "CompositionEntity{" +
-                "mycpt_id=" + mycpt_id +
-                ", cpt_id=" + cpt_id +
-                ", user_id=" + user_id +
-                ", mycpt='" + mycpt + '\'' +
-                ", mycpt_create_time='" + mycpt_create_time + '\'' +
-                ", mycpt_word_count=" + mycpt_word_count +
-                ", mark=" + mark +
-                ", submit_times=" + submit_times +
-                ", cpt_title='" + cpt_title + '\'' +
-                ", cpt_direction='" + cpt_direction + '\'' +
-                ", cpt_model='" + cpt_model + '\'' +
-                '}';
     }
 }
