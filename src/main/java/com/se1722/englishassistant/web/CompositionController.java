@@ -49,15 +49,20 @@ public class CompositionController {
 
         for(CompositionBankEntity compositionBankEntity: cptList) {
             compositionBankEntity.setMycpt_id(-1);
+            if(compositionBankEntity.getCpt_direction().length() > 212)
+                compositionBankEntity.setCurrent_direction(getBriefDirection(compositionBankEntity.getCpt_direction()));
+            else
+                compositionBankEntity.setCurrent_direction(compositionBankEntity.getCpt_direction());
         }
+
         //标记当前用户是否已经提交了当前作文题目
         for(CompositionBankEntity compositionBankEntity: cptList) {
-            log.info("compositionBankEntity: "+compositionBankEntity.getCpt_id()+", "+compositionBankEntity.getMycpt_id());
+//            log.info("compositionBankEntity: "+compositionBankEntity.getCpt_id()+", "+compositionBankEntity.getMycpt_id());
             for(CompositionEntity compositionEntity: mycptList) {
-                log.info("compositionEntity= "+compositionEntity.getCpt_id()+", "+compositionEntity.getMycpt_id());
+//                log.info("compositionEntity= "+compositionEntity.getCpt_id()+", "+compositionEntity.getMycpt_id());
                 if(compositionEntity.getCpt_id().equals(compositionBankEntity.getCpt_id())) {
                     compositionBankEntity.setMycpt_id(compositionEntity.getMycpt_id());
-                    log.info("匹配成功一次, 设置成功:"+compositionBankEntity.getMycpt_id());
+//                    log.info("匹配成功一次, 设置成功:"+compositionBankEntity.getMycpt_id());
                     break;
                 }
             }
@@ -77,7 +82,8 @@ public class CompositionController {
                                                @NotNull @RequestBody Map<String, Object>  params,
                                                HttpServletRequest request){
         CompositionEntity compositionEntity = new CompositionEntity();
-        String mycpt = params.get("mycpt"). toString();
+        String mycpt = params.get("mycpt").toString();
+//        log.info("mycpt作文= "+mycpt);
 //        log.info("CompositionController:cpt_reference=" + cpt_reference );
         compositionEntity.setCpt_id(cpt_id);
         compositionEntity.setUser_id(getUserID(request));
@@ -258,5 +264,16 @@ public class CompositionController {
     @NotNull
     private Integer getWordCount(@NotNull String mycpt) {
         return mycpt.split(" ").length;
+    }
+
+    /**
+     * 获得作文的简要要求
+     * @param wholeDirection
+     * @return
+     */
+    @Contract(pure = true)
+    @NotNull
+    private String getBriefDirection(String wholeDirection) {
+        return  wholeDirection.substring(0, 212)+"...";
     }
 }

@@ -29,6 +29,9 @@ public class CompositionBankEntity {
     //我的作文ID
     @TableField(exist = false)
     private Integer mycpt_id;
+    //题目简略的要求
+    @TableField(exist = false)
+    private String current_direction;
 
     public Integer getCpt_id() {
         return cpt_id;
@@ -75,6 +78,14 @@ public class CompositionBankEntity {
         this.mycpt_id = mycpt_id;
     }
 
+    public String getCurrent_direction() {
+        return current_direction;
+    }
+
+    public void setCurrent_direction(String current_direction) {
+        this.current_direction = current_direction;
+    }
+
     @Override
     public String toString() {
         return "CompositionBankEntity{" +
@@ -85,6 +96,7 @@ public class CompositionBankEntity {
                 ", cpt_model='" + cpt_model + '\'' +
                 ", cpt_reference=" + cpt_reference +
                 ", mycpt_id=" + mycpt_id +
+                ", briefDirection='" + current_direction + '\'' +
                 '}';
     }
 }
