@@ -82,8 +82,8 @@ public class PhoneCodeController {
      *
      * @return
      */
-    public int getRandomCode() {
-        int min = 1000, max = 9999;
+    public static int getRandomCode() {
+        int max = 1000, min = 9999;
         return (int) (Math.random() * (max - min) + min);
     }
 

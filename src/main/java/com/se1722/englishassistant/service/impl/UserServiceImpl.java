@@ -1,6 +1,7 @@
 package com.se1722.englishassistant.service.impl;
 
 import com.se1722.englishassistant.dao.UserDao;
+import com.se1722.englishassistant.entity.CurrentUser;
 import com.se1722.englishassistant.entity.UserEntity;
 import com.se1722.englishassistant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(UserEntity userEntity) {
+    public int update(CurrentUser userEntity) {
         return userDao.update(userEntity);
     }
 

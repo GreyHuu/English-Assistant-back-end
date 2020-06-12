@@ -3,7 +3,6 @@ package com.se1722.englishassistant.service.impl;
 import com.se1722.englishassistant.dao.ReadingGroupDao;
 import com.se1722.englishassistant.entity.ReadingGroupEntity;
 import com.se1722.englishassistant.service.ReadingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,6 +30,16 @@ public class ReadingServiceImpl implements ReadingService {
         return readingGroupDao.selectFullMarkById(id);
     }
 
+    /**
+     * 通过title模糊搜索
+     *
+     * @param title
+     * @return
+     */
+    @Override
+    public List<ReadingGroupEntity> searchReadingGroupEntity(String title) {
+        return readingGroupDao.searchReadingGroupEntity(title);
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -52,8 +61,5 @@ public class ReadingServiceImpl implements ReadingService {
         return readingGroupDao.updateByPrimaryKeySelective(record);
     }
 
-    @Override
-    public List<ReadingGroupEntity> searchReadingGroupEntity(String title) {
-        return null;
-    }
+
 }

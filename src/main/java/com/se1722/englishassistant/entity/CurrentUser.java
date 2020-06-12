@@ -14,12 +14,22 @@ public class CurrentUser {
     private String mobile;
     //    登录时间
     private String loginTime;
+    //邮箱
+    private String email;
 
-    public CurrentUser(Integer id, String nick_name, String mobile, String loginTime) {
+    public CurrentUser(Integer id, String nick_name, String mobile, String loginTime, String email) {
         this.id = id;
         this.nick_name = nick_name;
         this.mobile = mobile;
         this.loginTime = loginTime;
+        this.email = email;
+    }
+
+    public CurrentUser(String nick_name, String mobile, String email, Integer id) {
+        this.nick_name = nick_name;
+        this.mobile = mobile;
+        this.email = email;
+        this.id = id;
     }
 
     public Integer getId() {
@@ -52,5 +62,13 @@ public class CurrentUser {
 
     public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

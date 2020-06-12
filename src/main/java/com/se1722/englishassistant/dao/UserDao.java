@@ -1,5 +1,6 @@
 package com.se1722.englishassistant.dao;
 
+import com.se1722.englishassistant.entity.CurrentUser;
 import com.se1722.englishassistant.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import java.util.List;
 // Mapper可以使mybatis-spring-boot-starter自动映射
 @Mapper
 @Component
-public interface UserDao  {
+public interface UserDao {
     /**
      * 通过id查询用户
      *
@@ -43,10 +44,10 @@ public interface UserDao  {
     /**
      * 以修改昵称为例进行update
      *
-     * @param userEntity
+     * @param currentUser
      */
-    @Update("UPDATE user SET id=#{id} WHERE nick_name=#{nickName}")
-    int update(UserEntity userEntity);
+    @Update("UPDATE user SET nick_name=#{nick_name},mobile=#{mobile},email=#{email} WHERE id = #{id}")
+    int update(CurrentUser currentUser);
 
     /**
      * 根据用户id删除用户
@@ -59,6 +60,7 @@ public interface UserDao  {
 
     /**
      * 通过手机号查找到用户
+     *
      * @param phone
      * @return
      */
