@@ -22,7 +22,7 @@ import java.util.Set;
 public class AuthorityInterceptor implements HandlerInterceptor {
     // 登录的用户存储如session时的key
     public static final String CURRENT_USER_SESSION = "current_session";
-    private static final Set<String> NOT_INTERCEPT_URI = new HashSet<String>();//不拦截的URI
+    private static final Set<String> NOT_INTERCEPT_URI = new HashSet<>();//不拦截的URI
 
     //    对于不拦截的接口进行添加
     static {

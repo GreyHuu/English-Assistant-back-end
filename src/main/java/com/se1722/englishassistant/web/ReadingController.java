@@ -41,7 +41,7 @@ public class ReadingController {
     @GetMapping("/get-all-groups")
     public RestResponse getAllGroups() {
         List<ReadingGroupEntity> readingGroupEntities = readingService.getAllReadingGroup();
-        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<RestReadingGroupEntity>();
+        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<>();
         if (readingGroupEntities != null) {
             // 循环获得关联信息
             getWholeGroupInformation(readingGroupEntities, restReadingGroupEntities);
