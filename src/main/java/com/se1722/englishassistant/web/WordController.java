@@ -69,7 +69,7 @@ public class WordController {
     @PostMapping("/saveWord/{word_id}")
     public RestResponse saveWord(@PathVariable Integer word_id, HttpServletRequest request){
         user_id = getUser(request);
-        return RestResponse.succuess("保存生词成功",wordService.saveWord(word_id, user_id));
+        return RestResponse.succuess("保存成功",wordService.saveWord(word_id, user_id));
     }
 
     /**
@@ -97,4 +97,21 @@ public class WordController {
         }
         return RestResponse.succuess("查询生词成功", list);
     }
+
+    /**
+     * 模糊查询
+     * 通过用户输入
+     * @param word
+     * @return
+     */
+    @GetMapping("/getMeanByWord/{word}")
+    public RestResponse getMeanByWord(@PathVariable String word){
+        List<WordEntity> list = new ArrayList<WordEntity>();
+        list = (List<WordEntity>)wordService.getMeanByWord(word);
+        if(list.isEmpty()){
+            return RestResponse.fail("没有查到数据");
+        }
+        return RestResponse.succuess("查询单词成功", list);
+    }
+
 }

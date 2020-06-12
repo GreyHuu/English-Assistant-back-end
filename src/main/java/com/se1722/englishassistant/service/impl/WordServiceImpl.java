@@ -6,6 +6,7 @@ import com.se1722.englishassistant.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,5 +29,11 @@ public class WordServiceImpl implements WordService {
 
     public List<WordEntity> queryNewWord(Integer user_id) {
         return wordDao.findAllByUserId(user_id);
+    }
+
+    public List<WordEntity> getMeanByWord(String word) {
+        List<WordEntity> list = new ArrayList<WordEntity>();
+        list = wordDao.getMeanByWord(word);
+        return list;
     }
 }
