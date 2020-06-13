@@ -76,7 +76,7 @@ public class UserController {
 //                生成token
                 String token = TokenUtil.getToken(currentUser);
 //                放入返回的map中
-                HashMap<String, String> result = new HashMap<>();
+                HashMap<String, String> result = new HashMap<String, String>();
                 result.put("userName", currentUser.getNick_name());
                 result.put("token", token);
                 result.put("session", session.getId());
@@ -145,7 +145,7 @@ public class UserController {
 //                生成token
             String token = TokenUtil.getToken(currentUser);
 //                放入返回的map中
-            HashMap<String, String> result = new HashMap<>();
+            HashMap<String, String> result = new HashMap<String, String>();
             result.put("userName", currentUser.getNick_name());
             result.put("token", token);
             result.put("session", session.getId());
