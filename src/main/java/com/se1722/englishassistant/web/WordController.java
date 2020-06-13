@@ -77,7 +77,7 @@ public class WordController {
      * @param word_id
      * @return
      */
-    @DeleteMapping("/deleteWord/{word_id}")
+    @PostMapping("/deleteWord/{word_id}")
     public RestResponse deleteWord(@PathVariable Integer word_id, HttpServletRequest request){
         user_id = getUser(request);
         return RestResponse.succuess("删除成功",wordService.deleteWord(word_id, user_id));
@@ -93,7 +93,7 @@ public class WordController {
         List<WordEntity> list = new ArrayList<WordEntity>();
         list = (List<WordEntity>)wordService.queryNewWord(user_id);
         if(list.isEmpty()){
-            return RestResponse.fail("查询生词失败");
+            return RestResponse.succuess("这里还是空的，快去学习吧！");
         }
         return RestResponse.succuess("查询生词成功", list);
     }
@@ -109,7 +109,7 @@ public class WordController {
         List<WordEntity> list = new ArrayList<WordEntity>();
         list = (List<WordEntity>)wordService.getMeanByWord(word);
         if(list.isEmpty()){
-            return RestResponse.fail("没有查到数据");
+            return RestResponse.fail("");
         }
         return RestResponse.succuess("查询单词成功", list);
     }

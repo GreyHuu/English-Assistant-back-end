@@ -60,11 +60,14 @@ public class PlanController {
     @PostMapping("/savePlanDailyNumber/{number}/{type}")
     public RestResponse savePlanDailyNumber(HttpServletRequest request, @PathVariable Integer number ,@PathVariable Integer type){
         user_id = getUser(request);
+        if(number <= 0){
+            return RestResponse.fail("计划设置出现错误");
+        }
         Integer count = planService.savePlanDailyNumber(number, user_id, type);
         if(count != 0){
             return RestResponse.succuess("设置计划成功");
         }
-        return RestResponse.fail("初始化计划数据出错");
+        return RestResponse.fail("计划设置出现错误，请重新设置（每日单词量需要格式正确，不宜过大或过小）");
     }
 
     /**
@@ -86,7 +89,7 @@ public class PlanController {
      * 更新一则背诵信息
      * state为0时，表示没读过的单词。state为1时表示已打卡的单词
      */
-    @PutMapping("/updateDailyWordInPlan/{number}/{type}")
+    @PostMapping("/updateDailyWordInPlan/{number}/{type}")
     public RestResponse updateDailyWordInPlan(HttpServletRequest request, @PathVariable Integer number ,@PathVariable Integer type){
         user_id = getUser(request);
         log.info(user_id+"正在更新一则背诵信息");
@@ -138,7 +141,7 @@ public class PlanController {
     }
 
     // 完成了当天的背诵任务
-    @PutMapping("/updateDailyWordState")
+    @PostMapping("/updateDailyWordState")
     public RestResponse updateDailyWordState(HttpServletRequest request){
         user_id = getUser(request);
         return RestResponse.succuess(" 今日打卡完成",planService.updateDailyWordState(user_id));
