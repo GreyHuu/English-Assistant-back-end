@@ -41,7 +41,7 @@ public class ReadingController {
     @GetMapping("/get-all-groups")
     public RestResponse getAllGroups() {
         List<ReadingGroupEntity> readingGroupEntities = readingService.getAllReadingGroup();
-        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<RestReadingGroupEntity>();
+        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<>();
         if (readingGroupEntities != null) {
             // 循环获得关联信息
             getWholeGroupInformation(readingGroupEntities, restReadingGroupEntities);
@@ -58,7 +58,7 @@ public class ReadingController {
     @PostMapping("/search-title")
     public RestResponse searchGroupByTitle(@NotNull @RequestBody Map<String, Object> params) {
         List<ReadingGroupEntity> readingGroupEntities = readingService.searchReadingGroupEntity(params.get("title").toString());
-        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<RestReadingGroupEntity>();
+        List<RestReadingGroupEntity> restReadingGroupEntities = new ArrayList<>();
         if (readingGroupEntities != null) {
             // 循环获得关联信息
             getWholeGroupInformation(readingGroupEntities, restReadingGroupEntities);
@@ -106,7 +106,7 @@ public class ReadingController {
     public RestResponse getQuestionsByReadingId(@NotNull @RequestBody Map<String, Object> params) {
         String questionIds = readingQuestionGroupService.getQuestionsIdByReadingId(Integer.valueOf(params.get("id").toString()));
         List<String> ids = Arrays.asList(questionIds.split(","));
-        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<ReadingQuestionEntity>();
+        List<ReadingQuestionEntity> readingQuestionEntities = new ArrayList<>();
         for (String id : ids) {
             ReadingQuestionEntity readingQuestionEntity = readingQuestionService.selectByPrimaryKey(Integer.valueOf(id));
             readingQuestionEntities.add(readingQuestionEntity);
@@ -166,7 +166,7 @@ public class ReadingController {
             return RestResponse.fail("插入历史记录失败");
         ReadingListEntity readingListEntity1 = readingListService.getById(id);
         ReadingGroupEntity readingGroupEntity = readingService.selectByPrimaryKey(readingListEntity.getGroup_id());
-        Map<String, Object> re = new HashMap<String, Object>();
+        Map<String, Object> re = new HashMap<>();
         re.put("list", readingListEntity1);
         re.put("group", readingGroupEntity);
         re.put("time", readingListEntity.getTime().getTime());
@@ -209,7 +209,7 @@ public class ReadingController {
             }
             during_avg = during_avg / readingListEntities.size();
             score_avg = score_avg / readingListEntities.size();
-            Map<String, Object> result = new HashMap<String, Object>();
+            Map<String, Object> result = new HashMap<>();
             result.put("times", times);
             result.put("during", during_avg);
             result.put("score", score_avg);
@@ -227,7 +227,7 @@ public class ReadingController {
     @PostMapping("/search-list")
     public RestResponse searchListData(@NotNull @RequestBody Map<String, Object> params) {
         List<ReadingGroupEntity> readingGroupEntities = readingService.searchReadingGroupEntity(params.get("title").toString());
-        List<ReadingListEntity> readingListEntities = new ArrayList<ReadingListEntity>();
+        List<ReadingListEntity> readingListEntities = new ArrayList<>();
         if (readingGroupEntities != null) {
             for (ReadingGroupEntity readingGroupEntity : readingGroupEntities) {
                 List<ReadingListEntity> temp = null;
@@ -263,11 +263,11 @@ public class ReadingController {
      */
     @Nullable
     private RestResponse getRestResponseWholeList(List<ReadingListEntity> readingListEntities) {
-        List<Map<String, Object>> r = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> r = new ArrayList<>();
         Map<String, Object> result = null;
         if (readingListEntities != null) {
             for (ReadingListEntity readingListEntity : readingListEntities) {
-                result = new HashMap<String, Object>();
+                result = new HashMap<>();
                 ReadingGroupEntity readingGroupEntity = readingService.selectByPrimaryKey(readingListEntity.getGroup_id());
                 result.put("list", readingListEntity);
                 result.put("time", readingListEntity.getTime().getTime());
