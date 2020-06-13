@@ -49,6 +49,7 @@ public class CompositionController {
 
         for(CompositionBankEntity compositionBankEntity: cptList) {
             compositionBankEntity.setMycpt_id(-1);
+            compositionBankEntity.setFolded(true);
             if(compositionBankEntity.getCpt_direction().length() > 212)
                 compositionBankEntity.setCurrent_direction(getBriefDirection(compositionBankEntity.getCpt_direction()));
             else
@@ -199,9 +200,37 @@ public class CompositionController {
      */
     @ResponseBody
     @PostMapping("get-composition-question-keyword")
-    public RestResponse getCompositionQuestionByKeyword(@NotNull @RequestBody Map<String, Object> params) {
+    public RestResponse getCompositionQuestionByKeyword(@NotNull @RequestBody Map<String, Object> params,
+                                                        HttpServletRequest request) {
         String keyword = params.get("keyword").toString();
-        return RestResponse.succuess( compositionBankService.getCompositionQuestionByKeyword(keyword));
+        user_id = getUserID(request);
+        List<CompositionEntity> mycptList = compositionService.getAllMyCompositions(user_id);
+        List<CompositionBankEntity> cptList = compositionBankService.getCompositionQuestionByKeyword(keyword);
+
+        for(CompositionBankEntity compositionBankEntity: cptList) {
+            compositionBankEntity.setMycpt_id(-1);
+            compositionBankEntity.setFolded(true);
+            if(compositionBankEntity.getCpt_direction().length() > 212)
+                compositionBankEntity.setCurrent_direction(getBriefDirection(compositionBankEntity.getCpt_direction()));
+            else
+                compositionBankEntity.setCurrent_direction(compositionBankEntity.getCpt_direction());
+        }
+
+        //标记当前用户是否已经提交了当前作文题目
+        for(CompositionBankEntity compositionBankEntity: cptList) {
+//            log.info("compositionBankEntity: "+compositionBankEntity.getCpt_id()+", "+compositionBankEntity.getMycpt_id());
+            for(CompositionEntity compositionEntity: mycptList) {
+//                log.info("compositionEntity= "+compositionEntity.getCpt_id()+", "+compositionEntity.getMycpt_id());
+                if(compositionEntity.getCpt_id().equals(compositionBankEntity.getCpt_id())) {
+                    compositionBankEntity.setMycpt_id(compositionEntity.getMycpt_id());
+//                    log.info("匹配成功一次, 设置成功:"+compositionBankEntity.getMycpt_id());
+                    break;
+                }
+            }
+        }
+
+        return RestResponse.succuess(cptList);
+
     }
 
     /**

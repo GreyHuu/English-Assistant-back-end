@@ -32,6 +32,9 @@ public class CompositionBankEntity {
     //题目简略的要求
     @TableField(exist = false)
     private String current_direction;
+    //题目简略的要求
+    @TableField(exist = false)
+    private Boolean isFolded;
 
     public Integer getCpt_id() {
         return cpt_id;
@@ -86,6 +89,14 @@ public class CompositionBankEntity {
         this.current_direction = current_direction;
     }
 
+    public Boolean getFolded() {
+        return isFolded;
+    }
+
+    public void setFolded(Boolean folded) {
+        isFolded = folded;
+    }
+
     @Override
     public String toString() {
         return "CompositionBankEntity{" +
@@ -96,7 +107,8 @@ public class CompositionBankEntity {
                 ", cpt_model='" + cpt_model + '\'' +
                 ", cpt_reference=" + cpt_reference +
                 ", mycpt_id=" + mycpt_id +
-                ", briefDirection='" + current_direction + '\'' +
+                ", current_direction='" + current_direction + '\'' +
+                ", isFolded=" + isFolded +
                 '}';
     }
 }
