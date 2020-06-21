@@ -16,7 +16,9 @@ import java.util.Map;
  */
 @Slf4j
 public class SessionContent {
-    static Map<String, HttpSession> sessionMap = Collections.synchronizedMap(new HashMap<String, HttpSession>());
+    //    创建一个线程安全的map
+    static Map<String, HttpSession> sessionMap
+            = Collections.synchronizedMap(new HashMap<String, HttpSession>());
 
     /**
      * 存储session
@@ -35,6 +37,7 @@ public class SessionContent {
      * @param session
      */
     public static void updateSession(String sessionId, HttpSession session) {
+
         setSession(sessionId, session);
     }
 
@@ -75,6 +78,7 @@ public class SessionContent {
     public static boolean hasSession(String sessionId) {
         return sessionMap.containsKey(sessionId);
     }
+
     /**
      * 获取session
      *
