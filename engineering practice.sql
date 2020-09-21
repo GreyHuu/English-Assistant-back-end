@@ -11,7 +11,7 @@
  Target Server Version : 50730
  File Encoding         : 65001
 
- Date: 23/07/2020 22:43:44
+ Date: 21/09/2020 10:55:53
 */
 
 SET NAMES utf8mb4;
@@ -330,7 +330,7 @@ CREATE TABLE `user`  (
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`, `password`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
@@ -345,6 +345,7 @@ INSERT INTO `user` VALUES (24, '2020-06-08 16:10:08', '$2a$04$xq6I8pEIEG8.560BLA
 INSERT INTO `user` VALUES (25, '2020-06-10 14:18:14', '$2a$04$iozL9v1TMMdW9A7fcTovbekNfOSIdIpe8VwXF8sfSiBliCCIAqq1e', '你好', '15756482697', 21, '15756482697', '1519715742@qq.com');
 INSERT INTO `user` VALUES (26, '2020-06-13 14:26:48', '$2a$04$jvMHEYRQgrGv6S/C.wWgve8y.288wHFmxA38YoaC.rhqfQd3gHhum', '弃用', '13072808061', 21, '13072808061', '2485389749@qq.com');
 INSERT INTO `user` VALUES (27, '2020-06-16 13:08:59', '$2a$04$Z3mBuL1J7pKgDPe4AeogUeO.Y4PoP5DLsngQmN46ibw2OscaunPWm', '范贤红', '13072808065', 21, '13072808065', '2485389749@qq.com');
+INSERT INTO `user` VALUES (28, '2020-09-21 09:57:51', '$2a$04$yCcXEpzERUalI0/hP64VLuPbSguFkmQSciFoAjZyy.nkTBd7AYm3W', '17602603997', '17602603997', 21, '17602603997', '1519715742@qq.com');
 
 -- ----------------------------
 -- Table structure for word
@@ -1722,7 +1723,7 @@ CREATE TABLE `word_record`  (
   `type` int(255) NULL DEFAULT NULL,
   `number` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7424 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7431 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of word_record
@@ -2134,6 +2135,13 @@ INSERT INTO `word_record` VALUES (7420, 901, 27, 0, 0, 100);
 INSERT INTO `word_record` VALUES (7421, 1001, 27, 0, 0, 100);
 INSERT INTO `word_record` VALUES (7422, 1101, 27, 0, 0, 100);
 INSERT INTO `word_record` VALUES (7423, 1201, 27, 0, 0, 100);
+INSERT INTO `word_record` VALUES (7424, 1, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7425, 201, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7426, 401, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7427, 601, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7428, 801, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7429, 1001, 28, 0, 0, 200);
+INSERT INTO `word_record` VALUES (7430, 1201, 28, 0, 0, 200);
 
 -- ----------------------------
 -- Table structure for word_user_plans
